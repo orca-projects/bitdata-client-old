@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const SERVER_URL = "http://localhost";
+const SERVER_URL = "http://localhost:1234";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,8 +25,9 @@ app.use(
 
 app.get("/login/kakao", async (req, res) => {
     try {
-        const response = new RequestSender()
+        const response = await new RequestSender()
             .setUrl(`${SERVER_URL}/auths/login/kakao/`)
+            .setMethod("GET")
             .send();
 
         return res.redirect(response.loginUrl);
@@ -47,8 +48,9 @@ app.get("/login/kakao/auths/callback", async (req, res) => {
     }
 
     try {
-        const response = new RequestSender()
+        const response = await new RequestSender()
             .setUrl(`${SERVER_URL}/auths/login/kakao/callback/`)
+            .setMethod("POST")
             .setData({
                 code,
                 state,
@@ -83,10 +85,10 @@ function getRedirectByMemberState(response) {
 
 app.get("/join/kakao", async (req, res) => {
     try {
-        const response = new RequestSender()
+        const response = await new RequestSender()
             .setUrl(`${SERVER_URL}/auths/login/kakao/consent/`)
+            .setMethod("POST")
             .setSessionKey(getSessionKey(req))
-            // .setWithCredentials(true) // 확인 필요
             .send();
 
         return res.redirect("/onboarding");
@@ -108,8 +110,9 @@ app.post("/onboarding/keys/save", async (req, res) => {
     }
 
     try {
-        const response = new RequestSender()
-            .setUrl(`${SERVER_URL}/onboarding/keys/save/`) // URL 설정 추가
+        const response = await new RequestSender()
+            .setUrl(`${SERVER_URL}/auths/onboarding/keys/save/`) // URL 설정 추가
+            .setMethod("POST")
             .setSessionKey(getSessionKey(req))
             .setData({
                 apiKey: apiKey,
@@ -137,12 +140,11 @@ app.listen(PORT, () => {
 class RequestSender {
     constructor() {
         this.url = "";
-        this.method = "GET";
+        this.method = "";
         this.headers = {
             "Content-Type": "application/json",
         };
         this.data = null;
-        this.withCredentials = false;
         this.sessionKey = null;
     }
 
@@ -166,11 +168,6 @@ class RequestSender {
         return this;
     }
 
-    setWithCredentials(flag) {
-        this.withCredentials = flag;
-        return this;
-    }
-
     setSessionKey(sessionKey) {
         this.sessionKey = sessionKey;
         return this;
@@ -182,14 +179,13 @@ class RequestSender {
                 ? { ...this.data, session_key: this.sessionKey }
                 : this.data;
 
-            requestData = convertJson(requestData, "camelToSnake");
+            const convertedData = requestData && convertJson(requestData, "camelToSnake");
 
             const response = await axios({
                 url: this.url,
                 method: this.method,
                 headers: this.headers,
-                data: requestData,
-                withCredentials: this.withCredentials,
+                data: convertedData,
             });
 
             return convertJson(response.data, "snakeToCamel");
