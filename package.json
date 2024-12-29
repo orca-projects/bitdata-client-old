@@ -1,22 +1,23 @@
 {
-  "name": "bitdata",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "pm2 start ecosystem.config.cjs --env development",
-    "build": "vite build",
-    "start": "pm2 start ecosystem.config.cjs --env production",
-    "stop": "pm2 stop ecosystem.config.cjs",
-    "restart": "pm2 restart ecosystem.config.cjs"
-  },
-  "devDependencies": {
-    "vite": "^5.4.11"
-  },
-  "dependencies": {
-    "axios": "^1.7.8",
-    "express": "^4.21.1",
-    "express-session": "^1.18.1",
-    "pm2": "^5.4.3"
-  }
+    "name": "bitdata",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "pm2 start ecosystem.config.cjs --env development",
+        "build:development": "vite build --mode development",
+        "build:production": "vite build --mode production",
+        "start": "pm2 start ecosystem.config.cjs --env production",
+        "stop": "pm2 stop ecosystem.config.cjs",
+        "restart": "pm2 restart ecosystem.config.cjs"
+    },
+    "devDependencies": {
+        "vite": "^5.4.11"
+    },
+    "dependencies": {
+        "axios": "^1.7.8",
+        "express": "^4.21.1",
+        "express-session": "^1.18.1",
+        "pm2": "^5.4.3"
+    }
 }

@@ -1,30 +1,29 @@
 import './styles/faq.css';
 
-const $faqs = document.querySelectorAll('.faq'); // 자주 묻는 질문 목록
-const $exitBtn = document.querySelector('.exit-btn'); // [탈퇴하기] 버튼
+const $faqs = document.querySelectorAll('.faq');
+const $exitBtn = document.querySelector('.exit-btn');
 
-const $exitModal = document.querySelector('.exit'); // 회원 탈퇴 모달
-const $exitModalCloseBtn = document.querySelector('.exit .close-btn'); // 닫기 버튼
-const $exitModalFrm = document.querySelector('.exit .exit-reason-frm'); // 탈퇴 사유 폼
-const $exitModalExitReason = document.querySelector('#exit-reason'); // 탈퇴 사유
-const $exitModalSubmitBtn = document.querySelector('.exit .submit-exit-btn'); // [회원 탈퇴] 버튼
+const $exitModal = document.querySelector('.exit');
+const $exitModalCloseBtn = document.querySelector('.exit .close-btn');
+const $exitModalFrm = document.querySelector('.exit .exit-reason-frm');
+const $exitModalExitReason = document.querySelector('#exit-reason');
+const $exitModalSubmitBtn = document.querySelector('.exit .submit-exit-btn');
 
+for (const faq of $faqs) {
+    const $expandArrowBtn = faq.querySelector('.expand-arrow-btn');
 
-for (const faq of $faqs) { 
-    const $expandArrowBtn = faq.querySelector('.expand-arrow-btn'); // 확장 버튼
-    
-    $expandArrowBtn.addEventListener('click', expandAnswer); // 답변 영역 확장 기능 추가
+    $expandArrowBtn.addEventListener('click', expandAnswer);
 }
 
 $exitBtn.addEventListener('click', openExitModal);
 
 $exitModalCloseBtn.addEventListener('click', closeExitModal);
 
-$exitModalExitReason.addEventListener('input', inputExitReason);
+// $exitModalExitReason.addEventListener('input', inputExitReason);
 
 $exitModalSubmitBtn.addEventListener('click', (event) => {
-    if (!$exitModalSubmitBtn.classList.contains('active')) { // 비활성화 상태시
-        event.preventDefault(); // 기본 동작 방지
+    if (!$exitModalSubmitBtn.classList.contains('active')) {
+        event.preventDefault();
     }
 });
 
@@ -33,43 +32,43 @@ $exitModalFrm.addEventListener('submit', (event) => {
     submitEixt();
 });
 
-function expandAnswer() { // 답변 영역 확장
+function expandAnswer() {
     const $expandArrowBtnImg = this.querySelector('img');
     const $answerBlock = this.closest('.faq').querySelector('.answer-block');
 
-    $expandArrowBtnImg.src = '/assets/images/button/triangle-up.png'; // 이미지 변경
-    $answerBlock.classList.remove('hidden'); // 답변 영역 확장
+    $expandArrowBtnImg.src = '/assets/images/button/triangle-up.png';
+    $answerBlock.classList.remove('hidden');
 
-    this.removeEventListener('click', expandAnswer); // 답변 영역 확장 이벤트 삭제
-    this.addEventListener('click', collapseAnswer); // 답변 영역 축소 이벤트 추가
+    this.removeEventListener('click', expandAnswer);
+    this.addEventListener('click', collapseAnswer);
 }
 
-function collapseAnswer() { // 답변 영역 축소
+function collapseAnswer() {
     const $expandArrowBtnImg = this.querySelector('img');
     const $answerBlock = this.closest('.faq').querySelector('.answer-block');
 
-    $expandArrowBtnImg.src = '/assets/images/button/triangle-down.png'; // 이미지 변경
-    $answerBlock.classList.add('hidden'); // 답변 영역 숨김
-    
-    this.removeEventListener('click', collapseAnswer); // 답변 영역 축소 이벤트 삭제
-    this.addEventListener('click', expandAnswer); // 답변 영역 확장 이벤트 추가
+    $expandArrowBtnImg.src = '/assets/images/button/triangle-down.png';
+    $answerBlock.classList.add('hidden');
+
+    this.removeEventListener('click', collapseAnswer);
+    this.addEventListener('click', expandAnswer);
 }
 
 function openExitModal() {
-    document.body.style.overflow = 'hidden'; // 뒷 배경 스크롤 방지
+    document.body.style.overflow = 'hidden';
     $exitModal.classList.remove('hidden');
 }
 
 function closeExitModal() {
-    document.body.style.overflow = 'auto'; // 뒷 배경 스크롤 가능
+    document.body.style.overflow = 'auto';
     $exitModal.classList.add('hidden');
-    // 모달 초기화
-    $exitModalExitReason.value = ""; // 탈퇴 사유 입력란 초기화
-    $exitModalSubmitBtn.classList.remove('active'); // [회원 탈퇴] 버튼 비활성화
+
+    $exitModalExitReason.value = '';
+    $exitModalSubmitBtn.classList.remove('active');
 }
 
 function inputExitReason() {
-    if ($exitModalExitReason.value == "") {
+    if ($exitModalExitReason.value == '') {
         $exitModalSubmitBtn.classList.remove('active');
     } else {
         $exitModalSubmitBtn.classList.add('active');
