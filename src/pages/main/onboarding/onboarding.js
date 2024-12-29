@@ -47,6 +47,26 @@ $apiManagementFrm.addEventListener('submit', (event) => {
 });
 
 
-function spendApiKey() {
-    window.location.href = '/collect';
+async function spendApiKey() {
+    const apiKey = document.querySelector('#api-key').value.trim();
+    const secretKey = document.querySelector('#secret-key').value.trim();
+
+    try {
+        const response = await fetch('/onboarding/keys/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                apiKey: apiKey,
+                secretKey: secretKey,
+            }),
+        });
+
+        window.location.href = '/collect';
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An unexpected error occurred. Please try again.');
+    }
 }
