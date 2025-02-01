@@ -1,5 +1,5 @@
-@import "/src/styles/common/reset.css";
-@import "/src/styles/common/default.css";
+@import "/src/styles/reset.css";
+@import "/src/styles/default.css";
 
 header p {
     margin-bottom: 160px;
@@ -25,16 +25,4 @@ main .status.fail {
 /* 안내 텍스트 */
 main .notice {
     color: #7B7B7B;
-}
-
-/* 테스트 */
-.test {
-    position: fixed;
-    top: 0; right: 0;
-    
-    display: flex;
-    flex-direction: column;
-}
-.test button {
-    padding: 10px;
 }

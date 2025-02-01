@@ -1,5 +1,5 @@
-@import "/src/styles/common/reset.css";
-@import "/src/styles/common/default.css";
+@import "/src/styles/reset.css";
+@import "/src/styles/default.css";
 
 /* 바이낸스 계정 연동 모달 */
 @import "./binance-setting-modal.css"; 
@@ -37,9 +37,13 @@ main .card.user-profile .card-box .binance-link-status .state-box {
     align-items: center;
     gap: 10px;
 }
-main .card.user-profile .card-box .binance-link-status .state {
+main .card.user-profile .card-box .binance-link-status .state.success {
     font-size: 1.5rem;
     color: #24CD15;
+}
+main .card.user-profile .card-box .binance-link-status .state.fail {
+    font-size: 1.5rem;
+    color: #FA7878;
 }
 main .card.user-profile .card-box .binance-link-status .expose-info-btn {
     position: relative;
@@ -80,6 +84,9 @@ main .card.user-profile .card-box .binance-link-status .relink-btn span {
     color: #575757;
 }
 /* 사용자 정보 */
+main .card.user-profile .card-box .user-info {
+    margin-top: 40px;
+}
 main .card.user-profile .card-box .user-info p {
     padding-bottom: 10px;
     font-weight: 700;
@@ -122,4 +129,25 @@ main .etc .faq {
 }
 .loading .box p {
     color: #fff;
+}
+
+/* 연동 실패 화면 */
+.connected-fail .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.connected-fail .box img {
+    width: 100px; height: 100px;
+}
+.connected-fail .box p {
+    color: #fff;
+}
+.connected-fail .box p.warn {
+    color: #FF3232;
 }

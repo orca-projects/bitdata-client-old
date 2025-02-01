@@ -58,15 +58,15 @@
                         </header>
                         <div class="card-box">
                             <header>
-                                <h2 class="username">트레이더님 환영합니다.</h2>
+                                <h2 class="username"><span id="profile-username"></span> 환영합니다.</h2>
                             </header>
                             <div class="binance-link-status">
                                 <div class="state-box">
-                                    <span class="state">바이낸스 계정 정상 연동</span>
+                                    <span id="profile-state" class="state"></span>
                                     <button type="button" class="expose-info-btn">
                                         ?
                                         <div class="info-box">
-                                            <p class="api-key-info">API Key: H****Y</p>
+                                            <p class="api-key-info">API Key: <span id="profile-api-key"></span></p>
                                             <p class="secret-key-info">Secret Key: ********</p>
                                         </div>
                                     </button>
@@ -77,8 +77,7 @@
                                 </button>
                             </div>
                             <div class="user-info">
-                                <p class="name">Nickname : 98thNo21_sharks</p>
-                                <p class="email">UID : 880907446</p>
+                                <p class="binance-uid">UID : <span id="profile-binance-uid"></span></p>
                             </div>
                             <button type="button" class="setting-btn">설정하기</button>
                         </div>
@@ -101,6 +100,15 @@
             <p>바이낸스 계정 및 데이터 연동 시도중...</p>
         </div>
     </div>
+    <!-- [연동 실패] 화면 -->
+     <div class="modal connected-fail hidden">
+        <div class="modal-background"></div>
+        <div class="box">
+            <img src="/assets/images/notice_icon.png" alt="알림 아이콘">
+            <p class="warn">데이터 수집 불가</p>
+            <p>바이낸스 계정 연동 상태를 확인해주세요!</p>
+        </div>
+     </div>
     <!-- 바이낸스 계정 연동 모달 -->
     <div class="modal binance-setting hidden">
         <div class="modal-background"></div>

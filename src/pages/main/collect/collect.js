@@ -1,32 +1,61 @@
 import './collect.css';
 
-const $statusImage = document.querySelector('.status-image');
-const $statusText = document.querySelector('.status');
-const $noticeText = document.querySelector('.notice');
+import { SERVER_URL } from '@constant/apiConstant';
+import RequestSender from '@library/RequestSender';
+import ProfileManager from '@manager/ProfileManager';
 
+document.addEventListener('DOMContentLoaded', collectHistory);
 
-function collectionSusccess() { // 데이터 수집 성공시 
+async function collectHistory() {
+    try {
+        const request = new RequestSender()
+            .setUrl(`${SERVER_URL}/user/collect/`)
+            .setMethod('GET')
+            .send();
+
+        const timeout = new Promise((resolve) => setTimeout(resolve, 3000));
+
+        const [response] = await Promise.all([request, timeout]);
+
+        const profileData = response.profile;
+
+        const profileManager = new ProfileManager();
+        profileManager.saveData(profileData);
+
+        if (profileManager.isConnected()) {
+            collectionSuccess();
+        } else {
+            collectionFail();
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        collectionFail();
+    }
+}
+
+function collectionSuccess() {
     window.location.href = '/history';
 }
 
-function collectionFail() { // 데이터 수집 실패시
-    console.log('데이터 수집 실패');
+async function collectionFail() {
+    const $statusImage = document.querySelector('.status-image');
+    const $statusText = document.querySelector('.status');
+    const $noticeText = document.querySelector('.notice');
 
-    // 상태 변경에 따른 이미지 및 문구 변경
-    $statusImage.innerHTML = `<img src="/assets/images/notice_icon.png" alt="경고 표시">`;
-    $statusText.innerHTML = `데이터 수집 불가`;
-    $statusText.classList.add('fail');
-    $noticeText.innerHTML = `바이낸스 계정 연동 상태를 확인해주세요!`;
+    if ($statusImage) {
+        $statusImage.innerHTML = `<img src="/assets/images/notice_icon.png" alt="Warning Icon">`;
+    }
 
-    setTimeout(() => { // 5초 뒤 설정화면으로 이동
-        window.location.href = '/setting';
-    }, 5000);
+    if ($statusText) {
+        $statusText.innerHTML = `데이터 수집 불가`;
+        $statusText.classList.add('fail');
+    }
+
+    if ($noticeText) {
+        $noticeText.innerHTML = `바이낸스 계정 연동 상태를 확인해주세요!`;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    window.location.href = '/setting';
 }
-
-
-// 테스트 코드
-const $successBtn = document.querySelector('.success');
-const $failBtn = document.querySelector('.fail'); 
-
-$successBtn.addEventListener('click', collectionSusccess);
-$failBtn.addEventListener('click', collectionFail);
