@@ -15,6 +15,14 @@
     width: 1450px; height: 100%;
     padding: 0 30px;
 }
+.content > header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.content > header .notice {
+    color: #CFCFCF;
+}
 /* 필터 영역 */
 /* 각 필터 */
 .filter-container {
