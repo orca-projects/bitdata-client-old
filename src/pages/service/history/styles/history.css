@@ -24,15 +24,27 @@
     color: #CFCFCF;
 }
 /* 필터 영역 */
-/* 각 필터 */
-.filter-container {
-    margin-top: 50px;
+.content-filter input {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+/* 조회 */
+.search-container {
+    margin: 30px 0;
+}
+.search-container .content-body {
     display: flex;
     justify-content: space-between;
 }
-.filter-container input {
-    padding: 5px 10px;
-    border-radius: 5px;
+.search-container .content-footer {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+.search-container .content-body .filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 /* 승패 필터 */
 .filter-winlose span,
@@ -64,6 +76,33 @@
     text-align: center;
     font-size: 14px;
     color: #0C8CE9;
+}
+/* 거래 내역 최신화 버튼 */
+.update-history-btn {
+    box-sizing: border-box;
+    height: 34px;
+    padding: 6px 10px;
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.update-history-btn .btn-text {
+    font-weight: 700; font-size: 14px;
+    color: #575757;
+}
+.search-btn {
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-weight: 700; font-size: 16px;
+    color: #fff;
+    background-color: #0C8CE9;
+}
+/* 코인 필터, 페이지 당 항목 수 컨테이너 */
+.content-filter > .filter-container {
+    display: flex;
+    justify-content: space-between;
 }
 /* 코인 필터 */
 .filter-symbol span {
@@ -99,7 +138,7 @@
 }
 .content-table th, 
 .content-table td {
-    padding: 12px 18px;
+    padding: 12px 12px;
     text-align: center;
     vertical-align: middle;
     border: none;
@@ -107,13 +146,15 @@
 }
 /* 포지션 텍스트 강조 */
 /* 승 색상 강조 */
-.content-table tr.win > td:nth-child(5), 
-.content-table tr.win > td:nth-child(6) {
+.content-table tr.win > td:nth-child(7), 
+.content-table tr.win > td:nth-child(8),
+.content-table tr.win > td:nth-child(9) {
     color: #008636;
 }
 /* 패 색상 강조 */
-.content-table tr.lose > td:nth-child(5), 
-.content-table tr.lose > td:nth-child(6) {
+.content-table tr.lose > td:nth-child(7), 
+.content-table tr.lose > td:nth-child(8), 
+.content-table tr.lose > td:nth-child(9) {
     color: #d9534f;
 }
 /* 돋보기 버튼 */
@@ -151,9 +192,75 @@
 .content-table td .image-memo-btn img {
     width: 20px; height: 20px;
 }
+/* 툴팁 */
+.content-table th {
+    position: relative;
+}
+.tooltip-btn {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+.tooltip-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    text-align: left;
+    white-space: nowrap;
+}
+.tooltip-content .container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+th .tooltip-btn:hover + .tooltip-content {
+    display: block;
+    bottom: 50px;
+}
+.filter-winlose {
+    position: relative;
+}
+.filter-winlose .tooltip-btn:hover + .tooltip-content {
+    display: block;
+    top: 30px;
+}
+.update-history-btn {
+    position: relative;
+}
+.update-history-btn:hover .tooltip-content {
+    display: block;
+    right: 145px;
+}
+/* 최종 손익률 */
+.final-profit {
+    position: relative;
+    cursor: pointer;
+}
+.final-profit .text{
+    border-bottom: 1px solid;
+}
+.fee, 
+.funding-cost,
+.total-fee {
+    font-weight: 700;
+}
+.total-fee {
+    color: #008636;
+}
+.final-profit:hover .tooltip-content {
+    display: block;
+    top: 50px;
+}
 
 /* 콘텐츠 푸터 영역 */
-.content-footer {
+main > .content-footer {
     margin-bottom: 70px;
 }
 /* 페이지 네이션 */
