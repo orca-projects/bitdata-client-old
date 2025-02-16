@@ -81,7 +81,7 @@ class ProfileManager {
     }
 
     isConnected() {
-        return this._isConnected;
+        return Boolean(this._isConnected);
     }
 
     getApiKey() {
@@ -89,7 +89,7 @@ class ProfileManager {
     }
 
     getBinanceUid() {
-        return this._binanceUid;
+        return Number(this._binanceUid);
     }
 }
 
