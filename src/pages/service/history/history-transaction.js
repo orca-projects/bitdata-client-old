@@ -7,10 +7,7 @@ import TransactionManager from '@manager/TransactionManager';
 // for test start
 const fetchTransaction = async () => {
     try {
-        const response = await new RequestSender()
-            .setUrl(`${SERVER_URL}/history/`)
-            .setMethod('GET')
-            .send();
+        const response = await new RequestSender().setUrl(`${SERVER_URL}/history/`).setMethod('GET').send();
 
         return response;
     } catch (error) {

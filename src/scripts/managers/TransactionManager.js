@@ -7,17 +7,19 @@ class TransactionManager {
         this._binanceUid = binanceUid;
         this._transactions = null;
         this._updated = null;
+
+        this._renderManager = null;
     }
 
     async init() {
         try {
-            const data = await this._dbManager.select(
-                this._storeName,
-                this._binanceUid
-            );
+            const data = await this._dbManager.select(this._storeName, this._binanceUid);
 
             this._transactions = data.transactions;
             this._updated = data.updated;
+
+            this._renderManager = new TransactionRenderManager();
+            this._renderManager.init(this._transactions);
         } catch (error) {
             console.error('Failed to get transactions:', error);
         }
@@ -45,40 +47,52 @@ class TransactionManager {
     }
 
     renderTransaction() {
-        const transactionTableSelector = '.content-table table tbody';
-        const $table = document.querySelector(transactionTableSelector);
-
-        if (!$table) {
-            console.warn('🚨 Transaction table not found in DOM.');
-            return;
-        }
-
-        $table.innerHTML = '';
-
-        if (
-            !this._transactions ||
-            Object.keys(this._transactions).length === 0
-        ) {
-            const emptyRow = document.createElement('tr');
-            const emptyCell = document.createElement('td');
-            emptyCell.setAttribute('colspan', '12');
-            emptyCell.textContent = 'No transactions found.';
-            emptyRow.appendChild(emptyCell);
-            $table.appendChild(emptyRow);
-            return;
-        }
-
-        Object.entries(this._transactions).forEach(
-            ([positionId, transaction]) => {
-                const row = new TransactionBase(
-                    positionId,
-                    transaction
-                ).getRow();
-                $table.appendChild(row);
-            }
-        );
+        this._renderManager.render();
     }
 }
+
+class TransactionRenderManager {
+    constructor() {
+        this._filterManager = new TransactionFilterManager();
+
+        this._transactionBaseArr = [];
+
+        this._$transactionTable = document.querySelector('.content-table table tbody');
+        this._$transactionRowArr = [];
+    }
+
+    init(transactions) {
+        this._$transactionTable.innerHTML = '';
+
+        Object.entries(transactions).forEach(([positionId, transaction]) => {
+            const transactionBase = new TransactionBase(positionId, transaction);
+            const row = transactionBase.getRow();
+
+            this._transactionBaseArr.push(transactionBase);
+            this._$transactionTable.appendChild(row);
+            this._$transactionRowArr.push(row);
+        });
+    }
+
+    render() {
+        const satisfiedTransactionArr = this._transactionBaseArr.reduce((satisfiedTransactionArr, transactionBase) => {
+            if (this._filterManager.isSatisfied(transactionBase)) {
+                satisfiedTransactionArr.push(transactionBase.getRowId());
+            }
+
+            return satisfiedTransactionArr;
+        }, []);
+
+        this._$transactionRowArr.forEach(($transactionRow) => {
+            if (satisfiedTransactionArr.includes($transactionRow.id)) {
+                $transactionRow.classList.remove('hidden');
+            } else {
+                $transactionRow.classList.add('hidden');
+            }
+        });
+    }
+}
+
 class TransactionBase {
     constructor(positionId, transaction) {
         this._positionId = positionId;
@@ -91,6 +105,10 @@ class TransactionBase {
         this._totalSell = transaction.totalSell;
         this._pnl = transaction.pnl;
         this._finalPnl = transaction.finalPnl;
+        this._totalBuyFee = transaction.totalBuyFee;
+        this._totalSellFee = transaction.totalSellFee;
+        this._totalFundingCost = transaction.totalFundingCost;
+        this._totalFee = transaction.totalFee;
         this._finalRoi = transaction.finalRoi;
         this._avgBuy = transaction.avgBuy;
         this._avgSell = transaction.avgSell;
@@ -100,7 +118,10 @@ class TransactionBase {
         const positionClosed = this._positionClosed.replace(/ /g, '<br>');
 
         const row = document.createElement('tr');
+
+        row.id = `transaction-${this._positionId}`;
         row.classList.add(this._winlose);
+        row.classList.add('hidden');
 
         row.innerHTML = `
             <td>${positionClosed}</td>
@@ -114,12 +135,10 @@ class TransactionBase {
                 <span class="text">${this._finalPnl.toLocaleString()}</span>
                 <div class="tooltip-content">
                     <div class="container">
-                        <p>매수 체결 방식: <span>시장가</span></p>
-                        <p>매수 체결 수수료: <span class="fee">-5.22</span></p>
-                        <p>매도 체결 방식: <span>지정가</span></p>
-                        <p>매도 체결 수수료: <span class="fee">-1.45</span></p>
-                        <p>총 펀딩 비용: <span class="funding-cost">12.45</span></p>
-                        <p>수수료 총합: <span class="total-fee">5.78</span></p>
+                        <p>매수 체결 수수료: <span class="fee">${this._totalBuyFee}</span></p>
+                        <p>매도 체결 수수료: <span class="fee">${this._totalSellFee}</span></p>
+                        <p>총 펀딩 비용: <span class="funding-cost">${this._totalFundingCost}</span></p>
+                        <p>수수료 총합: <span class="total-fee">${this._totalFee}</span></p>
                     </div>
                 </div>
             </td>
@@ -133,6 +152,62 @@ class TransactionBase {
             </td>
         `;
         return row;
+    }
+
+    isSatisfied() {
+        return this._filterManager.isSatisfied();
+    }
+
+    getRowId() {
+        return `transaction-${this._positionId}`;
+    }
+
+    getPositionClosed() {
+        return this._positionClosed;
+    }
+
+    getWinlose() {
+        return this._winlose;
+    }
+}
+
+class TransactionFilterManager {
+    constructor() {
+        this._dateFilter = document.querySelector('input[name="data-date"]');
+        this._winloseFilter = document.querySelectorAll('input[name="filter-winlose"]');
+    }
+
+    isSatisfied(transactionBase) {
+        const positionClosed = transactionBase.getPositionClosed();
+        const winlose = transactionBase.getWinlose();
+
+        return this.checkDateFilter(positionClosed) && this.checkWinloseFilter(winlose);
+    }
+
+    checkDateFilter(positionClosed) {
+        const [start, end] = this._dateFilter.value.split(' ~ ');
+
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+        const currentDate = new Date(positionClosed.split(' ')[0].replace(/-/g, '/'));
+
+        return currentDate >= startDate && currentDate <= endDate;
+    }
+
+    checkWinloseFilter(winlose) {
+        let selectedValue = 'all';
+
+        this._winloseFilter.forEach((radio) => {
+            if (radio.checked) {
+                selectedValue = radio.value;
+            }
+        });
+
+        if (selectedValue === 'all') {
+            return true;
+        }
+
+        return selectedValue === winlose;
     }
 }
 
