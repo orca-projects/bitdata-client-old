@@ -22,13 +22,13 @@ const test = async () => {
     const response = await fetchTransaction();
 
     const binanceUid = response.binanceUid;
-    const transaction = response.transaction;
+    const transactions = response.transactions;
 
     const dbManager = new BitdataIDBManager();
     await dbManager.openDB();
 
-    const transactionManager = new TransactionManager(dbManager, binanceUid);
-    await transactionManager.saveTransaction(transaction);
+    const transactionsManager = new TransactionManager(dbManager, binanceUid);
+    await transactionsManager.saveTransaction(transactions);
 };
 // for test end
 
@@ -41,13 +41,13 @@ const initTransaction = async () => {
 
     const binanceUid = profileManager.getBinanceUid();
 
-    const transactionManager = new TransactionManager(dbManager, binanceUid);
-    await transactionManager.init();
+    const transactionsManager = new TransactionManager(dbManager, binanceUid);
+    await transactionsManager.init();
 
-    transactionManager.renderTransaction();
+    transactionsManager.renderTransaction();
 };
 
 (async () => {
-    // await test();
+    await test();
     await initTransaction();
 })();
