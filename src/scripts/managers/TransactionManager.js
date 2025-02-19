@@ -97,8 +97,8 @@ class TransactionBase {
     constructor(positionId, transaction) {
         this._positionId = positionId;
         this._winlose = transaction.winlose;
-        this._positionClosed = transaction.psitionClosed;
-        this._positionDuration = transaction.postionDuration;
+        this._positionClosed = transaction.positionClosed;
+        this._positionDuration = transaction.positionDuration;
         this._position = transaction.position;
         this._symbol = transaction.symbol;
         this._totalBuy = transaction.totalBuy;
