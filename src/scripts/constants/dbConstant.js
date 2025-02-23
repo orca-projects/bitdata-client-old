@@ -1,2 +1,2 @@
 export const IDB_NAME = 'bitdata';
-export const STORE_TRNASACTION = 'Transaction';
+export const TRANSACTION_STORE = 'Transaction';

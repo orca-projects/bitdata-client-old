@@ -1,4 +1,4 @@
-import { IDB_NAME, STORE_TRNASACTION } from '@constant/dbConstant';
+import { IDB_NAME, TRANSACTION_STORE } from '@constant/dbConstant';
 
 class BitdataIDBManager {
     constructor() {
@@ -13,10 +13,9 @@ class BitdataIDBManager {
 
             request.onupgradeneeded = (event) => {
                 const db = event.target.result;
-                if (!db.objectStoreNames.contains(STORE_TRNASACTION)) {
-                    db.createObjectStore(STORE_TRNASACTION, {
-                        keyPath: 'binanceUid',
-                    });
+
+                if (!db.objectStoreNames.contains(TRANSACTION_STORE)) {
+                    db.createObjectStore(TRANSACTION_STORE, { keyPath: 'binanceUid' });
                 }
             };
 
@@ -60,18 +59,17 @@ class BitdataIDBManager {
         });
     }
 
-    delete(storeName, id) {
+    delete(storeName, key) {
         return new Promise((resolve, reject) => {
             if (!this._db) {
                 return reject('Database is not opened.');
             }
             const transaction = this._db.transaction(storeName, 'readwrite');
             const store = transaction.objectStore(storeName);
-            const request = store.delete(id);
+            const request = store.delete(key);
 
             request.onsuccess = () => resolve(true);
-            request.onerror = (event) =>
-                reject(`Delete failed: ${event.target.error}`);
+            request.onerror = (event) => reject(`Delete failed: ${event.target.error}`);
         });
     }
 

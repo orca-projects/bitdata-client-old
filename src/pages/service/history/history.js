@@ -4,106 +4,93 @@ import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
 import BitdataIDBManager from '@manager/BitdataIDBManager';
 import ProfileManager from '@manager/ProfileManager';
+import TransactionFilterObserverManager from '@manager/TransactionFilterObserverManager';
 import TransactionManager from '@manager/TransactionManager';
 
-// for test start
-const fetchTransaction = async () => {
-    try {
-        const response = await new RequestSender().setUrl(`${SERVER_URL}/history/`).setMethod('GET').send();
-
-        return response;
-    } catch (error) {
-        console.error('API 데이터 로드 오류:', error);
-    }
-};
-
-const test = async () => {
-    // const response = await fetchTransaction();
-
-    // const binanceUid = response.binanceUid;
-    // const transactions = response.transactions;
-
-    const binanceUid = 886324576;
-    const transactions = {
-        1: {
-            winlose: 'win',
-            positionClosed: '2025-02-16 22:10:32',
-            positionDuration: '5시간 23분',
-            position: 'SHORT',
-            symbol: 'ETHUSDT.P',
-            totalBuy: '2,000,000',
-            totalSell: '2,015,050',
-            pnl: '15,050',
-            finalPnl: '1,670',
-            totalBuyFee: '-5.22',
-            totalSellFee: '-1.45',
-            totalFundingCost: '12.45',
-            totalFee: '5.78',
-            finalRoi: '0.08%',
-            avgBuy: '3312.34',
-            avgSell: '3400.33',
-        },
-        2: {
-            winlose: 'win',
-            positionClosed: '2025-01-16 22:10:32',
-            positionDuration: '5시간 23분',
-            position: 'SHORT',
-            symbol: 'ETHUSDT.P',
-            totalBuy: '2,000,000',
-            totalSell: '2,015,050',
-            pnl: '15,050',
-            finalPnl: '1,670',
-            totalBuyFee: '-5.22',
-            totalSellFee: '-1.45',
-            totalFundingCost: '12.45',
-            totalFee: '5.78',
-            finalRoi: '0.08%',
-            avgBuy: '3312.34',
-            avgSell: '3400.33',
-        },
-        3: {
-            winlose: 'win',
-            positionClosed: '2025-02-16 22:10:32',
-            positionDuration: '5시간 23분',
-            position: 'SHORT',
-            symbol: 'ETHUSDT.P',
-            totalBuy: '2,000,000',
-            totalSell: '2,015,050',
-            pnl: '15,050',
-            finalPnl: '1,670',
-            totalBuyFee: '-5.22',
-            totalSellFee: '-1.45',
-            totalFundingCost: '12.45',
-            totalFee: '5.78',
-            finalRoi: '0.08%',
-            avgBuy: '3312.34',
-            avgSell: '3400.33',
-        },
-    };
-    const dbManager = new BitdataIDBManager();
-    await dbManager.openDB();
-
-    const transactionsManager = new TransactionManager(dbManager, binanceUid);
-    await transactionsManager.saveTransaction(transactions);
-};
-// for test end
-
-const initTransaction = async () => {
-    const dbManager = new BitdataIDBManager();
-    await dbManager.openDB();
-
-    const profileManager = new ProfileManager();
-    await profileManager.init();
-
-    const binanceUid = profileManager.getBinanceUid();
-
-    const transactionsManager = new TransactionManager(dbManager, binanceUid);
-    await transactionsManager.init();
-
-    transactionsManager.renderTransaction();
-};
-
 (async () => {
+    // for test start
+    const fetchTransaction = async () => {
+        try {
+            const response = await new RequestSender().setUrl(`${SERVER_URL}/history/`).setMethod('GET').send();
+
+            return response;
+        } catch (error) {
+            console.error('API 데이터 로드 오류:', error);
+        }
+    };
+
+    const test = async () => {
+        // const response = await fetchTransaction();
+
+        // const binanceUid = response.binanceUid;
+        // const transactions = response.transactions;
+
+        const binanceUid = 886324576;
+        const transactionData = {
+            1: {
+                winlose: 'win',
+                positionClosed: '2025-02-23 22:10:32',
+                positionDuration: '5시간 23분',
+                position: 'SHORT',
+                symbol: 'ETHUSDT.P',
+                totalBuy: '2,000,000',
+                totalSell: '2,015,050',
+                pnl: '15,050',
+                finalPnl: '1,670',
+                totalBuyFee: '-5.22',
+                totalSellFee: '-1.45',
+                totalFundingCost: '12.45',
+                totalFee: '5.78',
+                finalRoi: '0.08%',
+                avgBuy: '3312.34',
+                avgSell: '3400.33',
+            },
+            2: {
+                winlose: 'win',
+                positionClosed: '2025-01-16 22:10:32',
+                positionDuration: '5시간 23분',
+                position: 'SHORT',
+                symbol: 'ETHUSDT.P',
+                totalBuy: '2,000,000',
+                totalSell: '2,015,050',
+                pnl: '15,050',
+                finalPnl: '1,670',
+                totalBuyFee: '-5.22',
+                totalSellFee: '-1.45',
+                totalFundingCost: '12.45',
+                totalFee: '5.78',
+                finalRoi: '0.08%',
+                avgBuy: '3312.34',
+                avgSell: '3400.33',
+            },
+            3: {
+                winlose: 'win',
+                positionClosed: '2025-02-23 22:10:32',
+                positionDuration: '5시간 23분',
+                position: 'SHORT',
+                symbol: 'BTCUSDT',
+                totalBuy: '2,000,000',
+                totalSell: '2,015,050',
+                pnl: '15,050',
+                finalPnl: '1,670',
+                totalBuyFee: '-5.22',
+                totalSellFee: '-1.45',
+                totalFundingCost: '12.45',
+                totalFee: '5.78',
+                finalRoi: '0.08%',
+                avgBuy: '3312.34',
+                avgSell: '3400.33',
+            },
+        };
+        const dbManager = new BitdataIDBManager();
+        await dbManager.openDB();
+
+        const transactionsManager = new TransactionManager(dbManager, null, binanceUid);
+        await transactionsManager.init();
+        await transactionsManager.saveTransaction(transactionData);
+    };
+    // for test end
+
     // 필터
     // 일자 필터
     const $filterDate = document.querySelector('.filter-date input');
@@ -141,8 +128,20 @@ const initTransaction = async () => {
         });
     });
 
-    await test();
-    await initTransaction();
+    await test(); // for test
+
+    const dbManager = new BitdataIDBManager();
+    await dbManager.openDB();
+
+    const profileManager = new ProfileManager();
+    await profileManager.init();
+
+    const binanceUid = profileManager.getBinanceUid();
+
+    const transactionFilterObserverManager = new TransactionFilterObserverManager();
+
+    const transactionsManager = new TransactionManager(dbManager, transactionFilterObserverManager, binanceUid);
+    await transactionsManager.init();
 
     // 메모
     // field
@@ -168,6 +167,23 @@ const initTransaction = async () => {
     const $memoUpdateModalTitleInput = document.getElementById('title'); // 제목 입력란
     const $memoUpdateModalDescriptionInput = document.getElementById('description'); // 설명 입력란
     const $memoUpdateModalSaveBtn = document.querySelector('.memo-update .save-btn'); // 저장 버튼
+
+    document.querySelector('.search-btn').addEventListener('click', () => {
+        const dateFilter = document.querySelector('input[name="data-date"]').value;
+        const winloseFilter = Array.from(document.querySelectorAll('input[name="filter-winlose"]')).reduce(
+            (winlose, radio) => (radio.checked ? radio.value : winlose),
+            'ALL'
+        );
+
+        const filterData = {
+            date: dateFilter,
+            winlose: winloseFilter,
+        };
+
+        transactionFilterObserverManager.notify(filterData);
+    });
+
+    document.querySelector('.search-btn').click();
 
     // methods
     // 거래내역

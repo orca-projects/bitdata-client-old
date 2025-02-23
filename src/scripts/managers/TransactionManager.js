@@ -1,25 +1,35 @@
-import { STORE_TRNASACTION } from '@constant/dbConstant';
+import { TRANSACTION_STORE } from '@constant/dbConstant';
 
 class TransactionManager {
-    constructor(dbManager, binanceUid) {
+    constructor(dbManager, filterObserverManager, binanceUid) {
         this._dbManager = dbManager;
-        this._storeName = STORE_TRNASACTION;
-        this._binanceUid = binanceUid;
-        this._transactions = null;
-        this._updated = null;
+        this._storeName = TRANSACTION_STORE;
 
-        this._renderManager = null;
+        this._filterObserverManager = filterObserverManager;
+
+        this._binanceUid = binanceUid;
+        this._transactionData = null;
+
+        this._transactionTable = document.querySelector('.content-table table tbody');
     }
 
     async init() {
         try {
             const data = await this._dbManager.select(this._storeName, this._binanceUid);
 
-            this._transactions = data.transactions;
-            this._updated = data.updated;
+            if (!data) return;
 
-            this._renderManager = new TransactionRenderManager();
-            this._renderManager.init(this._transactions);
+            this._transactionData = data.transactions;
+
+            this._transactionTable.innerHTML = '';
+
+            Object.entries(this._transactionData).forEach(([positionId, positionData]) => {
+                const transaction = new TransactionBase(positionId, positionData);
+
+                this._transactionTable.appendChild(transaction.getRow());
+
+                if (this._filterObserverManager) this._filterObserverManager.subscribe(transaction);
+            });
         } catch (error) {
             console.error('Failed to get transactions:', error);
         }
@@ -27,69 +37,17 @@ class TransactionManager {
 
     async saveTransaction(transactions) {
         try {
-            const data = {
+            const transactionData = {
                 binanceUid: this._binanceUid,
                 transactions: transactions,
-                updated: Date.now(),
             };
-            await this._dbManager.insert(this._storeName, data);
+
+            const merged = Object.assign(this._transactionData || {}, transactionData);
+
+            await this._dbManager.insert(this._storeName, merged);
         } catch (error) {
             console.error('Failed to save transactions:', error);
         }
-    }
-
-    getTransaction() {
-        return this._transactions;
-    }
-
-    getUpdated() {
-        return this._updated;
-    }
-
-    renderTransaction() {
-        this._renderManager.render();
-    }
-}
-
-class TransactionRenderManager {
-    constructor() {
-        this._filterManager = new TransactionFilterManager();
-
-        this._transactionBaseArr = [];
-
-        this._$transactionTable = document.querySelector('.content-table table tbody');
-        this._$transactionRowArr = [];
-    }
-
-    init(transactions) {
-        this._$transactionTable.innerHTML = '';
-
-        Object.entries(transactions).forEach(([positionId, transaction]) => {
-            const transactionBase = new TransactionBase(positionId, transaction);
-            const row = transactionBase.getRow();
-
-            this._transactionBaseArr.push(transactionBase);
-            this._$transactionTable.appendChild(row);
-            this._$transactionRowArr.push(row);
-        });
-    }
-
-    render() {
-        const satisfiedTransactionArr = this._transactionBaseArr.reduce((satisfiedTransactionArr, transactionBase) => {
-            if (this._filterManager.isSatisfied(transactionBase)) {
-                satisfiedTransactionArr.push(transactionBase.getRowId());
-            }
-
-            return satisfiedTransactionArr;
-        }, []);
-
-        this._$transactionRowArr.forEach(($transactionRow) => {
-            if (satisfiedTransactionArr.includes($transactionRow.id)) {
-                $transactionRow.classList.remove('hidden');
-            } else {
-                $transactionRow.classList.add('hidden');
-            }
-        });
     }
 }
 
@@ -112,9 +70,15 @@ class TransactionBase {
         this._finalRoi = transaction.finalRoi;
         this._avgBuy = transaction.avgBuy;
         this._avgSell = transaction.avgSell;
+
+        this._row = this.getRow();
     }
 
     getRow() {
+        if (this._row) {
+            return this._row;
+        }
+
         const positionClosed = this._positionClosed.replace(/ /g, '<br>');
 
         const row = document.createElement('tr');
@@ -154,60 +118,66 @@ class TransactionBase {
         return row;
     }
 
-    isSatisfied() {
-        return this._filterManager.isSatisfied();
+    filter(filterData) {
+        if (!this.checkDateFilter(filterData)) return false;
+        if (!this.checkWinloseFilter(filterData)) return false;
+        if (!this.checkSymbolFilter(filterData)) return false;
+
+        return true;
     }
 
-    getRowId() {
-        return `transaction-${this._positionId}`;
-    }
+    checkDateFilter(filterData) {
+        const dateData = filterData.date;
 
-    getPositionClosed() {
-        return this._positionClosed;
-    }
+        if (!dateData) {
+            return true;
+        }
 
-    getWinlose() {
-        return this._winlose;
-    }
-}
-
-class TransactionFilterManager {
-    constructor() {
-        this._dateFilter = document.querySelector('input[name="data-date"]');
-        this._winloseFilter = document.querySelectorAll('input[name="filter-winlose"]');
-    }
-
-    isSatisfied(transactionBase) {
-        const positionClosed = transactionBase.getPositionClosed();
-        const winlose = transactionBase.getWinlose();
-
-        return this.checkDateFilter(positionClosed) && this.checkWinloseFilter(winlose);
-    }
-
-    checkDateFilter(positionClosed) {
-        const [start, end] = this._dateFilter.value.split(' ~ ');
+        const [start, end] = dateData.split(' ~ ');
 
         const startDate = new Date(start);
         const endDate = new Date(end);
-        const currentDate = new Date(positionClosed.split(' ')[0].replace(/-/g, '/'));
+        const currentDate = new Date(this._positionClosed.split(' ')[0].replace(/-/g, '/'));
 
         return currentDate >= startDate && currentDate <= endDate;
     }
 
-    checkWinloseFilter(winlose) {
-        let selectedValue = 'all';
+    checkWinloseFilter(filterData) {
+        const winloseData = filterData.winlose;
 
-        this._winloseFilter.forEach((radio) => {
-            if (radio.checked) {
-                selectedValue = radio.value;
-            }
-        });
-
-        if (selectedValue === 'all') {
+        if (!winloseData) {
             return true;
         }
 
-        return selectedValue === winlose;
+        if (winloseData === 'all') {
+            return true;
+        }
+
+        return winloseData === this._winlose;
+    }
+
+    checkSymbolFilter(filterData) {
+        const symbolData = filterData.symbol;
+
+        if (!symbolData) {
+            return true;
+        }
+
+        try {
+            const regex = new RegExp(symbolData, 'i');
+            return regex.test(this._symbol);
+        } catch (error) {
+            console.error('Invalid regex pattern:', error);
+            return false;
+        }
+    }
+
+    showRow() {
+        this._row.classList.remove('hidden');
+    }
+
+    hideRow() {
+        this._row.classList.add('hidden');
     }
 }
 
