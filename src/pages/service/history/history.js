@@ -185,6 +185,23 @@ import TransactionManager from '@manager/TransactionManager';
 
     document.querySelector('.search-btn').click();
 
+    document.querySelector('input[name="data-symbol"]').addEventListener('input', (event) => {
+        const dateFilter = document.querySelector('input[name="data-date"]').value;
+        const winloseFilter = Array.from(document.querySelectorAll('input[name="filter-winlose"]')).reduce(
+            (winlose, radio) => (radio.checked ? radio.value : winlose),
+            'ALL'
+        );
+        const inputValue = event.target.value.trim().toUpperCase();
+
+        const filterData = {
+            date: dateFilter,
+            winlose: winloseFilter,
+            symbol: inputValue,
+        };
+
+        transactionFilterObserverManager.notify(filterData);
+    });
+
     // methods
     // 거래내역
     const openImageMemoModal = function () {
