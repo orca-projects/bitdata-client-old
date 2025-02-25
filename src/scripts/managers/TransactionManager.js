@@ -1,53 +1,23 @@
-import { TRANSACTION_STORE } from '@constant/dbConstant';
-
 class TransactionManager {
-    constructor(dbManager, filterObserverManager, binanceUid) {
-        this._dbManager = dbManager;
-        this._storeName = TRANSACTION_STORE;
-
+    constructor(filterObserverManager, transactionData) {
         this._filterObserverManager = filterObserverManager;
-
-        this._binanceUid = binanceUid;
-        this._transactionData = null;
+        this._transactionData = transactionData;
 
         this._transactionTable = document.querySelector('.content-table table tbody');
+
+        this.init();
     }
 
-    async init() {
-        try {
-            const data = await this._dbManager.select(this._storeName, this._binanceUid);
+    init() {
+        this._transactionTable.innerHTML = '';
 
-            if (!data) return;
+        Object.entries(this._transactionData).forEach(([positionId, positionData]) => {
+            const transaction = new TransactionBase(positionId, positionData);
 
-            this._transactionData = data.transactions;
+            this._transactionTable.appendChild(transaction.getRow());
 
-            this._transactionTable.innerHTML = '';
-
-            Object.entries(this._transactionData).forEach(([positionId, positionData]) => {
-                const transaction = new TransactionBase(positionId, positionData);
-
-                this._transactionTable.appendChild(transaction.getRow());
-
-                if (this._filterObserverManager) this._filterObserverManager.subscribe(transaction);
-            });
-        } catch (error) {
-            console.error('Failed to get transactions:', error);
-        }
-    }
-
-    async saveTransaction(transactions) {
-        try {
-            const transactionData = {
-                binanceUid: this._binanceUid,
-                transactions: transactions,
-            };
-
-            const merged = Object.assign(this._transactionData || {}, transactionData);
-
-            await this._dbManager.insert(this._storeName, merged);
-        } catch (error) {
-            console.error('Failed to save transactions:', error);
-        }
+            if (this._filterObserverManager) this._filterObserverManager.subscribe(transaction);
+        });
     }
 }
 
@@ -119,41 +89,9 @@ class TransactionBase {
     }
 
     filter(filterData) {
-        if (!this.checkDateFilter(filterData)) return false;
-        if (!this.checkWinloseFilter(filterData)) return false;
         if (!this.checkSymbolFilter(filterData)) return false;
 
         return true;
-    }
-
-    checkDateFilter(filterData) {
-        const dateData = filterData.date;
-
-        if (!dateData) {
-            return true;
-        }
-
-        const [start, end] = dateData.split(' ~ ');
-
-        const startDate = new Date(start);
-        const endDate = new Date(end);
-        const currentDate = new Date(this._positionClosed.split(' ')[0].replace(/-/g, '/'));
-
-        return currentDate >= startDate && currentDate <= endDate;
-    }
-
-    checkWinloseFilter(filterData) {
-        const winloseData = filterData.winlose;
-
-        if (!winloseData) {
-            return true;
-        }
-
-        if (winloseData === 'all') {
-            return true;
-        }
-
-        return winloseData === this._winlose;
     }
 
     checkSymbolFilter(filterData) {

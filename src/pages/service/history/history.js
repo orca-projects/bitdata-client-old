@@ -2,95 +2,12 @@ import './styles/history.css';
 
 import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
-import BitdataIDBManager from '@manager/BitdataIDBManager';
 import ProfileManager from '@manager/ProfileManager';
 import TransactionFilterObserverManager from '@manager/TransactionFilterObserverManager';
 import TransactionManager from '@manager/TransactionManager';
+import TransactionPaginationManager from '@manager/TransactionPaginationManager';
 
 (async () => {
-    // for test start
-    const fetchTransaction = async () => {
-        try {
-            const response = await new RequestSender().setUrl(`${SERVER_URL}/history/`).setMethod('GET').send();
-
-            return response;
-        } catch (error) {
-            console.error('API 데이터 로드 오류:', error);
-        }
-    };
-
-    const test = async () => {
-        // const response = await fetchTransaction();
-
-        // const binanceUid = response.binanceUid;
-        // const transactions = response.transactions;
-
-        const binanceUid = 886324576;
-        const transactionData = {
-            1: {
-                winlose: 'win',
-                positionClosed: '2025-02-23 22:10:32',
-                positionDuration: '5시간 23분',
-                position: 'SHORT',
-                symbol: 'ETHUSDT.P',
-                totalBuy: '2,000,000',
-                totalSell: '2,015,050',
-                pnl: '15,050',
-                finalPnl: '1,670',
-                totalBuyFee: '-5.22',
-                totalSellFee: '-1.45',
-                totalFundingCost: '12.45',
-                totalFee: '5.78',
-                finalRoi: '0.08%',
-                avgBuy: '3312.34',
-                avgSell: '3400.33',
-            },
-            2: {
-                winlose: 'win',
-                positionClosed: '2025-01-16 22:10:32',
-                positionDuration: '5시간 23분',
-                position: 'SHORT',
-                symbol: 'ETHUSDT.P',
-                totalBuy: '2,000,000',
-                totalSell: '2,015,050',
-                pnl: '15,050',
-                finalPnl: '1,670',
-                totalBuyFee: '-5.22',
-                totalSellFee: '-1.45',
-                totalFundingCost: '12.45',
-                totalFee: '5.78',
-                finalRoi: '0.08%',
-                avgBuy: '3312.34',
-                avgSell: '3400.33',
-            },
-            3: {
-                winlose: 'win',
-                positionClosed: '2025-02-23 22:10:32',
-                positionDuration: '5시간 23분',
-                position: 'SHORT',
-                symbol: 'BTCUSDT',
-                totalBuy: '2,000,000',
-                totalSell: '2,015,050',
-                pnl: '15,050',
-                finalPnl: '1,670',
-                totalBuyFee: '-5.22',
-                totalSellFee: '-1.45',
-                totalFundingCost: '12.45',
-                totalFee: '5.78',
-                finalRoi: '0.08%',
-                avgBuy: '3312.34',
-                avgSell: '3400.33',
-            },
-        };
-        const dbManager = new BitdataIDBManager();
-        await dbManager.openDB();
-
-        const transactionsManager = new TransactionManager(dbManager, null, binanceUid);
-        await transactionsManager.init();
-        await transactionsManager.saveTransaction(transactionData);
-    };
-    // for test end
-
     // 필터
     // 일자 필터
     const $filterDate = document.querySelector('.filter-date input');
@@ -128,20 +45,67 @@ import TransactionManager from '@manager/TransactionManager';
         });
     });
 
-    await test(); // for test
+    const fetchTransaction = async () => {
+        try {
+            const response = await new RequestSender().setUrl(`${SERVER_URL}/history/`).setMethod('GET').send();
 
-    const dbManager = new BitdataIDBManager();
-    await dbManager.openDB();
+            return response;
+        } catch (error) {
+            console.error('API 데이터 로드 오류:', error);
+        }
+    };
+
+    // const response = await fetchTransaction();
+
+    // const binanceUid = response.binanceUid;
+    // const transactions = response.transactions;
+
+    const generateTradeData = (numEntries) => {
+        const tradeData = {};
+        const baseTime = new Date();
+        const baseBuy = 2000000;
+        const baseSell = 2015050;
+        const basePnl = 15050;
+        const baseFinalPnl = 1670;
+        const baseFee = -5.22;
+        const baseFundingCost = 12.45;
+        const symbols = ['BTCUSDT.P', 'ETHUSDT.P', 'XRPUSDT.P', 'ADAUSDT.P', 'SOLUSDT.P']; // 심볼 리스트
+
+        for (let i = 1; i <= numEntries; i++) {
+            const timeOffset = i * 600000; // 10분씩 증가
+            const positionClosed = new Date(baseTime.getTime() + timeOffset).toISOString().replace('T', ' ').substring(0, 19);
+
+            tradeData[i] = {
+                winlose: i % 2 === 0 ? 'win' : 'lose',
+                positionClosed: positionClosed,
+                positionDuration: `${5 + i}시간 ${10 + i}분`,
+                position: i % 2 === 0 ? 'SHORT' : 'LONG',
+                symbol: symbols[i % symbols.length], // 심볼 변경
+                totalBuy: (baseBuy + i * 1000).toLocaleString(),
+                totalSell: (baseSell + i * 1000).toLocaleString(),
+                pnl: (basePnl + i * 50).toLocaleString(),
+                finalPnl: (baseFinalPnl + i * 10).toLocaleString(),
+                totalBuyFee: (baseFee - i * 0.1).toFixed(2),
+                totalSellFee: (baseFee + i * 0.1).toFixed(2),
+                totalFundingCost: (baseFundingCost + i * 0.5).toFixed(2),
+                totalFee: (Math.abs(baseFee * 2) + i * 0.2).toFixed(2),
+                finalRoi: `${(0.08 + i * 0.01).toFixed(2)}%`,
+                avgBuy: (3312.34 + i * 1.5).toFixed(2),
+                avgSell: (3400.33 + i * 1.5).toFixed(2),
+            };
+        }
+
+        return tradeData;
+    };
+
+    const transactionData = generateTradeData(100);
 
     const profileManager = new ProfileManager();
     await profileManager.init();
 
-    const binanceUid = profileManager.getBinanceUid();
-
     const transactionFilterObserverManager = new TransactionFilterObserverManager();
 
-    const transactionsManager = new TransactionManager(dbManager, transactionFilterObserverManager, binanceUid);
-    await transactionsManager.init();
+    const transactionsManager = new TransactionManager(transactionFilterObserverManager, transactionData);
 
     // 메모
     // field
@@ -169,37 +133,27 @@ import TransactionManager from '@manager/TransactionManager';
     const $memoUpdateModalSaveBtn = document.querySelector('.memo-update .save-btn'); // 저장 버튼
 
     document.querySelector('.search-btn').addEventListener('click', () => {
-        const dateFilter = document.querySelector('input[name="data-date"]').value;
-        const winloseFilter = Array.from(document.querySelectorAll('input[name="filter-winlose"]')).reduce(
-            (winlose, radio) => (radio.checked ? radio.value : winlose),
-            'ALL'
-        );
+        // TODO
 
         const filterData = {
-            date: dateFilter,
-            winlose: winloseFilter,
+            symbol: null,
         };
-
         transactionFilterObserverManager.notify(filterData);
     });
 
     document.querySelector('.search-btn').click();
+    const transactionPaginationManager = new TransactionPaginationManager();
+    transactionPaginationManager.updateItemsPerPage();
 
     document.querySelector('input[name="data-symbol"]').addEventListener('input', (event) => {
-        const dateFilter = document.querySelector('input[name="data-date"]').value;
-        const winloseFilter = Array.from(document.querySelectorAll('input[name="filter-winlose"]')).reduce(
-            (winlose, radio) => (radio.checked ? radio.value : winlose),
-            'ALL'
-        );
         const inputValue = event.target.value.trim().toUpperCase();
 
         const filterData = {
-            date: dateFilter,
-            winlose: winloseFilter,
             symbol: inputValue,
         };
 
         transactionFilterObserverManager.notify(filterData);
+        transactionPaginationManager.updateItemsPerPage();
     });
 
     // methods
