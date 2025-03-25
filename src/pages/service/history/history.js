@@ -47,7 +47,11 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
 
     const fetchTransaction = async () => {
         try {
-            const response = await new RequestSender().setUrl(`${SERVER_URL}/history/`).setMethod('GET').send();
+            const response = await new RequestSender()
+                .setUrl(`${SERVER_URL}/transaction/`)
+                .setMethod('GET')
+                .setParams({ startDate: 0, endDate: Date.now() })
+                .send();
 
             return response;
         } catch (error) {
@@ -55,56 +59,14 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
         }
     };
 
-    // const response = await fetchTransaction();
-
-    // const binanceUid = response.binanceUid;
-    // const transactions = response.transactions;
-
-    const generateTradeData = (numEntries) => {
-        const tradeData = {};
-        const baseTime = new Date();
-        const baseBuy = 2000000;
-        const baseSell = 2015050;
-        const basePnl = 15050;
-        const baseFinalPnl = 1670;
-        const baseFee = -5.22;
-        const baseFundingCost = 12.45;
-        const symbols = ['BTCUSDT.P', 'ETHUSDT.P', 'XRPUSDT.P', 'ADAUSDT.P', 'SOLUSDT.P']; // 심볼 리스트
-
-        for (let i = 1; i <= numEntries; i++) {
-            const timeOffset = i * 600000; // 10분씩 증가
-            const positionClosed = new Date(baseTime.getTime() + timeOffset).toISOString().replace('T', ' ').substring(0, 19);
-
-            tradeData[i] = {
-                winlose: i % 2 === 0 ? 'win' : 'lose',
-                positionClosed: positionClosed,
-                positionDuration: `${5 + i}시간 ${10 + i}분`,
-                position: i % 2 === 0 ? 'SHORT' : 'LONG',
-                symbol: symbols[i % symbols.length], // 심볼 변경
-                totalBuy: (baseBuy + i * 1000).toLocaleString(),
-                totalSell: (baseSell + i * 1000).toLocaleString(),
-                pnl: (basePnl + i * 50).toLocaleString(),
-                finalPnl: (baseFinalPnl + i * 10).toLocaleString(),
-                totalBuyFee: (baseFee - i * 0.1).toFixed(2),
-                totalSellFee: (baseFee + i * 0.1).toFixed(2),
-                totalFundingCost: (baseFundingCost + i * 0.5).toFixed(2),
-                totalFee: (Math.abs(baseFee * 2) + i * 0.2).toFixed(2),
-                finalRoi: `${(0.08 + i * 0.01).toFixed(2)}%`,
-                avgBuy: (3312.34 + i * 1.5).toFixed(2),
-                avgSell: (3400.33 + i * 1.5).toFixed(2),
-            };
-        }
-
-        return tradeData;
-    };
-
-    const transactionData = generateTradeData(100);
+    const response = await fetchTransaction();
 
     const profileManager = new ProfileManager();
     await profileManager.init();
 
     const transactionFilterObserverManager = new TransactionFilterObserverManager();
 
+    const transactionData = response.transaction;
     const transactionsManager = new TransactionManager(transactionFilterObserverManager, transactionData);
 
     // 메모
