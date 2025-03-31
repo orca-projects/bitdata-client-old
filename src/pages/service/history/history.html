@@ -1,313 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>거래내역</title>
+        <!-- favicon -->
+        <link rel="icon" href="/bitdata_icon.ico" type="image/png" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>거래내역</title>
-    <!-- favicon -->
-    <link rel="icon" href="/bitdata_icon.ico" type="image/png">
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CP2FVDL');
+        </script>
+        <!-- End Google Tag Manager -->
+    </head>
 
-    <!-- css -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <!-- Google Tag Manager -->
-    <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-            var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-5CP2FVDL');
-    </script>
-    <!-- End Google Tag Manager -->
-</head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display: none; visibility: hidden"></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <div class="layout">
-        <!-- 사이드 네비 -->
-        <aside>
-            <header>
-                <h1 class="title">BitData</h1>
-            </header>
-            <ul class="sidebar-menu">
-                <li>
-                    <a href="dashboard">대시보드</a>
-                </li>
-                <li class="active">
-                    <a href="/history">거래내역</a>
-                </li>
-                <li>
-                    <a href="/setting">설정</a>
-                </li>
-            </ul>
-            <footer>
-                <button type="button" class="logout-btn">로그아웃</button>
-            </footer>
-        </aside>
-        <div class="content">
-            <!-- 헤더 -->
-            <header>
-                <h2 class="title">거래내역</h2>
-                <p class="notice">빗데이터의 거래 내역은 USDT 기반의 포지션이 종료 된 거래 데이터만 노출하며, 단위 또한 USDT로 표기됩니다.</p>
-            </header>
-            <main>
-                <div class="content-filter">
-                    <div class="search-container">
-                        <div class="content-body">
-                            <div class="filter-container">
-                                <!-- 일자 필터 -->
-                                <div class="filter-date">
-                                    <span>일자 설정</span>
-                                    <input type="text" name="data-date">
+        <div class="layout">
+            <!-- 사이드 네비 -->
+            <aside>
+                <header>
+                    <h1 class="title">BitData</h1>
+                </header>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="dashboard">대시보드</a>
+                    </li>
+                    <li class="active">
+                        <a href="/history">거래내역</a>
+                    </li>
+                    <li>
+                        <a href="/setting">설정</a>
+                    </li>
+                </ul>
+                <footer>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </footer>
+            </aside>
+            <div class="content">
+                <!-- 헤더 -->
+                <header>
+                    <h2 class="title">거래내역</h2>
+                    <p class="notice">빗데이터의 거래 내역은 USDT 기반의 포지션이 종료 된 거래 데이터만 노출하며, 단위 또한 USDT로 표기됩니다.</p>
+                </header>
+                <main>
+                    <div class="content-filter">
+                        <div class="search-container">
+                            <div class="content-body">
+                                <div class="filter-container">
+                                    <!-- 일자 필터 -->
+                                    <div class="filter-date">
+                                        <span>일자 설정</span>
+                                        <input type="text" name="data-date" />
+                                    </div>
+                                    <!-- 승패 필터 -->
+                                    <div class="filter-winlose">
+                                        <span>
+                                            필터
+                                            <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁" />
+                                            <div class="tooltip-content">
+                                                <div class="container">
+                                                    <p>승/패는 거래 손익이 아닌 최종 손익에 의해 결정됩니다.</p>
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <input type="radio" name="filter-winlose" id="filter-winlose-all" value="all" checked />
+                                        <label for="filter-winlose-all">전체</label>
+                                        <input type="radio" name="filter-winlose" id="filter-winlose-win" value="win" />
+                                        <label for="filter-winlose-win">승</label>
+                                        <input type="radio" name="filter-winlose" id="filter-winlose-lose" value="lose" />
+                                        <label for="filter-winlose-lose">패</label>
+                                    </div>
                                 </div>
-                                <!-- 승패 필터 -->
-                                <div class="filter-winlose">
-                                    <span>
-                                        필터
-                                        <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁">
+                                <!-- 거래내역 최신화 -->
+                                <button class="update-history-btn" type="button">
+                                    <span class="btn-text">거래 내역 최신화</span>
+                                    <img src="/assets/images/button/restart.png" alt="재시작 버튼" />
+                                    <div class="tooltip-content">
+                                        <div class="container">
+                                            <p>데이터 수동 업데이트는 30분에 한번씩 가능합니다.</p>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="content-footer">
+                                <!-- 조회하기 -->
+                                <button class="search-btn" type="button">조회하기</button>
+                            </div>
+                        </div>
+                        <div class="filter-container">
+                            <!-- 코인 필터 -->
+                            <div class="filter-symbol">
+                                <span>검색</span>
+                                <input type="text" name="data-symbol" placeholder="코인명을 입력해주세요." />
+                            </div>
+                            <!-- 페이지 당 항목 수 -->
+                            <div class="pagination-option">
+                                <label for="option-item">페이지당 항목 수 </label>
+                                <select name="option-item" id="option-item">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-table">
+                        <!-- 거래 내역 테이블 -->
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>포지션 종료</th>
+                                    <th>포지션 유지 시간</th>
+                                    <th>포지션</th>
+                                    <th>코인명</th>
+                                    <th>총 매수 금액</th>
+                                    <th>총 매도 금액</th>
+                                    <th>
+                                        거래 손익
+                                        <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁" />
                                         <div class="tooltip-content">
                                             <div class="container">
-                                                <p>승/패는 거래 손익이 아닌 최종 손익에 의해 결정됩니다.</p>
+                                                <p>총 매수 금액과 총 매도 금액의 차액(모든 수수료 미포함)을 보여줍니다.</p>
                                             </div>
                                         </div>
-                                    </span>
-                                    <input type="radio" name="filter-winlose" id="filter-winlose-all" value="all"
-                                        checked>
-                                    <label for="filter-winlose-all">전체</label>
-                                    <input type="radio" name="filter-winlose" id="filter-winlose-win" value="win">
-                                    <label for="filter-winlose-win">승</label>
-                                    <input type="radio" name="filter-winlose" id="filter-winlose-lose" value="lose">
-                                    <label for="filter-winlose-lose">패</label>
-                                </div>
-                            </div>
-                            <!-- 거래내역 최신화 -->
-                            <button class="update-history-btn" type="button">
-                                <span class="btn-text">거래 내역 최신화</span>
-                                <img src="/assets/images/button/restart.png" alt="재시작 버튼">
-                                <div class="tooltip-content">
-                                    <div class="container">
-                                        <p>데이터 수동 업데이트는 30분에 한번씩 가능합니다.</p>
-                                    </div>
-                                </div>
+                                    </th>
+                                    <th>
+                                        최종 손익
+                                        <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁" />
+                                        <div class="tooltip-content">
+                                            <div class="container">
+                                                <p>거래 손익에서 체결 수수료와 펀딩 비용을 함께 포함하여 계산한,</p>
+                                                <p>실제 잔고에 영향을 미친 최종 손익을 보여줍니다.</p>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        최종 손익율
+                                        <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁" />
+                                        <div class="tooltip-content">
+                                            <div class="container">
+                                                <p>총 매수 금액과 최종 손익(수수료 반영)을 통해,</p>
+                                                <p>원금 대비 최종 손익율을 보여줍니다.</p>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>평균 매도 단가</th>
+                                    <th>평균 매수 단가</th>
+                                    <th>기록</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="content-footer">
+                        <!-- 페이지 이동 -->
+                        <div class="pagination-number">
+                            <button type="button" class="pre-start-btn">
+                                <img src="/assets/images/button/left-arrow-double.png" alt="처음으로 버튼" />
+                            </button>
+                            <button type="button" class="pre-btn">
+                                <img src="/assets/images/button/left-arrow.png" alt="이전 버튼" />
+                            </button>
+                            <div class="page-number-container"></div>
+                            <button type="button" class="next-btn">
+                                <img src="/assets/images/button/right-arrow.png" alt="다음 버튼" />
+                            </button>
+                            <button type="button" class="next-end-btn">
+                                <img src="/assets/images/button/right-arrow-double.png" alt="마지막으로 버튼" />
                             </button>
                         </div>
-                        <div class="content-footer">
-                            <!-- 조회하기 -->
-                            <button class="search-btn" type="button">조회하기</button>
-                        </div>
                     </div>
-                    <div class="filter-container">
-                        <!-- 코인 필터 -->
-                        <div class="filter-symbol">
-                            <span>검색</span>
-                            <input type="text" name="data-symbol" placeholder="코인명을 입력해주세요.">
-                        </div>
-                        <!-- 페이지 당 항목 수 -->
-                        <div class="pagination-option">
-                            <label for="option-item">페이지당 항목 수 </label>
-                            <select name="option-item" id="option-item">
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-table">
-                    <!-- 거래 내역 테이블 -->
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>포지션 종료</th>
-                                <th>포지션 유지 시간</th>
-                                <th>포지션</th>
-                                <th>코인명</th>
-                                <th>총 매수 금액</th>
-                                <th>총 매도 금액</th>
-                                <th>
-                                    거래 손익
-                                    <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁">
-                                    <div class="tooltip-content">
-                                        <div class="container">
-                                            <p>총 매수 금액과 총 매도 금액의 차액(모든 수수료 미포함)을 보여줍니다.</p>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    최종 손익
-                                    <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁">
-                                    <div class="tooltip-content">
-                                        <div class="container">
-                                            <p>거래 손익에서 체결 수수료와 펀딩 비용을 함께 포함하여 계산한,</p>
-                                            <p>실제 잔고에 영향을 미친 최종 손익을 보여줍니다.</p>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    최종 손익율
-                                    <img class="tooltip-btn" src="/assets/images/button/tooltip-btn.png" alt="툴팁">
-                                    <div class="tooltip-content">
-                                        <div class="container">
-                                            <p>총 매수 금액과 최종 손익(수수료 반영)을 통해,</p> 
-                                            <p>원금 대비 최종 손익율을 보여줍니다.</p>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>평균 매도 단가</th>
-                                <th>평균 매수 단가</th>
-                                <th>기록</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="content-footer">
-                    <!-- 페이지 이동 -->
-                    <div class="pagination-number">
-                        <button type="button" class="pre-start-btn">
-                            <img src="/assets/images/button/left-arrow-double.png" alt="처음으로 버튼">
-                        </button>
-                        <button type="button" class="pre-btn">
-                            <img src="/assets/images/button/left-arrow.png" alt="이전 버튼">
-                        </button>
-                        <div class="page-number-container"></div>
-                        <button type="button" class="next-btn">
-                            <img src="/assets/images/button/right-arrow.png" alt="다음 버튼">
-                        </button>
-                        <button type="button" class="next-end-btn">
-                            <img src="/assets/images/button/right-arrow-double.png" alt="마지막으로 버튼">
-                        </button>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-    <div class="calendar-container"></div>
-    <!-- 거래내역 이미지 메모장 -->
-    <div class="modal image-memo hidden">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <header>
-                <p class="title">이미지 메모장</p>
-                <button type="button" class="close-btn">
-                    <img src="/assets/images/button/close.jpeg" alt="닫기 버튼">
-                </button>
-            </header>
-            <div class="modal-body">
-                <div class="image-card-container">
-                    <div class="image-card">
-                        <img src="./images/temp-image.png" alt="Image">
-                        <div class="info">
-                            <p class="title">IMAGE0001</p>
-                            <p class="description">
-                                디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션
-                                디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션
-                            </p>
-                            <p class="upload-date">2024-05-02 22:21</p>
-                        </div>
-                        <div class="actions">
-                            <button class="view-btn">보기</button>
-                            <button class="delete-btn">삭제</button>
-                        </div>
-                    </div>
-                    <div class="image-card">
-                        <img src="./images/temp-image.png" alt="Image">
-                        <div class="info">
-                            <p class="title">IMAGE0001</p>
-                            <p class="description">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste sint vero molestiae
-                                corrupti, alias labore laborum eligendi quidem quos? Totam a ad id animi molestiae
-                                quibusdam laudantium ullam officia vel.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae impedit tempora
-                                ratione, recusandae placeat reiciendis eos ex atque in soluta ut ea fuga at optio quo
-                                magni nulla eius aut?
-                            </p>
-                            <p class="upload-date">2024-05-02 22:21</p>
-                        </div>
-                        <div class="actions">
-                            <button class="view-btn">보기</button>
-                            <button class="delete-btn">삭제</button>
-                        </div>
-                    </div>
-                    <div class="image-card">
-                        <img src="./images/temp-image.png" alt="Image">
-                        <div class="info">
-                            <p class="title">IMAGE0001</p>
-                            <p class="description">디스크립션</p>
-                            <p class="upload-date">2024-05-02 22:21</p>
-                        </div>
-                        <div class="actions">
-                            <button class="view-btn">보기</button>
-                            <button class="delete-btn">삭제</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="button-box hidden">
-                    <input type="file" id="image-upload" accept=".jpg, .jpeg, .png, .gif">
-                    <button type="button" class="upload-btn">업로드</button>
-                </div>
+                </main>
             </div>
-            <footer>
-                <p class="notice">* 이미지는 최대 3개까지 업로드 가능합니다.</p>
-            </footer>
         </div>
-    </div>
-    <!-- 이미지 크게 보기 모달 -->
-    <div class="modal image-memo-view hidden">
-        <div class="modal-content">
-            <div class="content-image">
-                <img src="" alt="Image">
-            </div>
-            <div class="content-outline"></div>
-            <div class="content-memo">
+        <div class="calendar-container"></div>
+        <!-- 거래내역 이미지 메모장 -->
+        <div class="modal image-memo hidden">
+            <div class="modal-background"></div>
+            <div class="modal-content">
                 <header>
-                    <p class="title">타이틀</p>
+                    <p class="title">이미지 메모장</p>
                     <button type="button" class="close-btn">
-                        <img src="/assets/images/button/close.jpeg" alt="닫기 버튼">
+                        <img src="/assets/images/button/close.jpeg" alt="닫기 버튼" />
                     </button>
                 </header>
-                <div class="content-body">
-                    <p class="discription-area">디스크립션</p>
+                <div class="modal-body">
+                    <div class="image-card-container">
+                        <div class="image-card">
+                            <img src="./images/temp-image.png" alt="Image" />
+                            <div class="info">
+                                <p class="title">IMAGE0001</p>
+                                <p class="description">
+                                    디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션
+                                    디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션디스크립션
+                                </p>
+                                <p class="upload-date">2024-05-02 22:21</p>
+                            </div>
+                            <div class="actions">
+                                <button class="view-btn">보기</button>
+                                <button class="delete-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="image-card">
+                            <img src="./images/temp-image.png" alt="Image" />
+                            <div class="info">
+                                <p class="title">IMAGE0001</p>
+                                <p class="description">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste sint vero molestiae corrupti, alias labore laborum eligendi
+                                    quidem quos? Totam a ad id animi molestiae quibusdam laudantium ullam officia vel. Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Repudiandae impedit tempora ratione, recusandae placeat reiciendis eos ex atque in soluta ut ea fuga at
+                                    optio quo magni nulla eius aut?
+                                </p>
+                                <p class="upload-date">2024-05-02 22:21</p>
+                            </div>
+                            <div class="actions">
+                                <button class="view-btn">보기</button>
+                                <button class="delete-btn">삭제</button>
+                            </div>
+                        </div>
+                        <div class="image-card">
+                            <img src="./images/temp-image.png" alt="Image" />
+                            <div class="info">
+                                <p class="title">IMAGE0001</p>
+                                <p class="description">디스크립션</p>
+                                <p class="upload-date">2024-05-02 22:21</p>
+                            </div>
+                            <div class="actions">
+                                <button class="view-btn">보기</button>
+                                <button class="delete-btn">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-box hidden">
+                        <input type="file" id="image-upload" accept=".jpg, .jpeg, .png, .gif" />
+                        <button type="button" class="upload-btn">업로드</button>
+                    </div>
                 </div>
                 <footer>
-                    <button type="button" class="update-btn">메모 수정하기</button>
+                    <p class="notice">* 이미지는 최대 3개까지 업로드 가능합니다.</p>
                 </footer>
             </div>
         </div>
-    </div>
-    <!-- 메모 수정 모달 -->
-    <div class="modal memo-update hidden">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <header>
-                <p class="title">메모장</p>
-                <button type="button" class="close-btn">
-                    <img src="/assets/images/button/close.jpeg" alt="닫기 버튼">
-                </button>
-            </header>
-            <div class="content-body">
-                <form action="" method="post">
-                    <input type="text" name="title" id="title" placeholder="제목을 입력해주세요." maxlength="10" required>
-                    <textarea name="description" id="description" placeholder="텍스트를 입력해주세요." maxlength="200"></textarea>
-                    <button type="submit" class="save-btn">저장</button>
-                </form>
+        <!-- 이미지 크게 보기 모달 -->
+        <div class="modal image-memo-view hidden">
+            <div class="modal-content">
+                <div class="content-image">
+                    <img src="" alt="Image" />
+                </div>
+                <div class="content-outline"></div>
+                <div class="content-memo">
+                    <header>
+                        <p class="title">타이틀</p>
+                        <button type="button" class="close-btn">
+                            <img src="/assets/images/button/close.jpeg" alt="닫기 버튼" />
+                        </button>
+                    </header>
+                    <div class="content-body">
+                        <p class="discription-area">디스크립션</p>
+                    </div>
+                    <footer>
+                        <button type="button" class="update-btn">메모 수정하기</button>
+                    </footer>
+                </div>
             </div>
         </div>
-    </div>
+        <!-- 메모 수정 모달 -->
+        <div class="modal memo-update hidden">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <header>
+                    <p class="title">메모장</p>
+                    <button type="button" class="close-btn">
+                        <img src="/assets/images/button/close.jpeg" alt="닫기 버튼" />
+                    </button>
+                </header>
+                <div class="content-body">
+                    <form action="" method="post">
+                        <input type="text" name="title" id="title" placeholder="제목을 입력해주세요." maxlength="10" required />
+                        <textarea name="description" id="description" placeholder="텍스트를 입력해주세요." maxlength="200"></textarea>
+                        <button type="submit" class="save-btn">저장</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <!-- js -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script type="module" src="./history.js"></script>
-</body>
-
+        <!-- js -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="module" src="./history.js"></script>
+    </body>
 </html>

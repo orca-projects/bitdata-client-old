@@ -45,14 +45,9 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
         });
     });
 
-    const fetchTransaction = async () => {
+    const fetchTransaction = async (filterData) => {
         try {
-            const response = await new RequestSender()
-                .setUrl(`${SERVER_URL}/transaction/`)
-                .setMethod('GET')
-                .setParams({ startDate: 0, endDate: Date.now() })
-                .send();
-
+            const response = await new RequestSender().setUrl(`${SERVER_URL}/transaction/`).setMethod('GET').setParams(filterData).send();
             return response;
         } catch (error) {
             console.error('API 데이터 로드 오류:', error);
@@ -67,7 +62,44 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
     const transactionFilterObserverManager = new TransactionFilterObserverManager();
 
     const transactionData = response.transaction;
-    const transactionsManager = new TransactionManager(transactionFilterObserverManager, transactionData);
+    const transactionsManager = new TransactionManager(transactionFilterObserverManager);
+    transactionsManager.init(transactionData);
+
+    const transactionPaginationManager = new TransactionPaginationManager();
+    transactionPaginationManager.updateItemsPerPage();
+
+    document.querySelector('.search-btn').addEventListener('click', async () => {
+        const [start, end] = $filterDate.value.split(' ~ ');
+        const filterData = {
+            startDate: new Date(start).getTime(),
+            endDate: new Date(end).getTime(),
+        };
+
+        const response = await fetchTransaction(filterData);
+
+        transactionsManager.init(response.transaction);
+
+        applyTransactionFilters();
+    });
+
+    document.querySelectorAll('input[name="filter-winlose"]').forEach((radio) => {
+        radio.addEventListener('change', applyTransactionFilters);
+    });
+
+    document.querySelector('input[name="data-symbol"]').addEventListener('input', applyTransactionFilters);
+
+    function applyTransactionFilters() {
+        const winlose = document.querySelector('input[name="filter-winlose"]:checked')?.value || 'all';
+        const symbol = document.querySelector('input[name="data-symbol"]').value.trim().toUpperCase();
+
+        const filterData = {
+            winlose: winlose,
+            symbol: symbol,
+        };
+
+        transactionFilterObserverManager.notify(filterData);
+        transactionPaginationManager.updateItemsPerPage();
+    }
 
     // 메모
     // field
@@ -93,30 +125,6 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
     const $memoUpdateModalTitleInput = document.getElementById('title'); // 제목 입력란
     const $memoUpdateModalDescriptionInput = document.getElementById('description'); // 설명 입력란
     const $memoUpdateModalSaveBtn = document.querySelector('.memo-update .save-btn'); // 저장 버튼
-
-    document.querySelector('.search-btn').addEventListener('click', () => {
-        // TODO
-
-        const filterData = {
-            symbol: null,
-        };
-        transactionFilterObserverManager.notify(filterData);
-    });
-
-    document.querySelector('.search-btn').click();
-    const transactionPaginationManager = new TransactionPaginationManager();
-    transactionPaginationManager.updateItemsPerPage();
-
-    document.querySelector('input[name="data-symbol"]').addEventListener('input', (event) => {
-        const inputValue = event.target.value.trim().toUpperCase();
-
-        const filterData = {
-            symbol: inputValue,
-        };
-
-        transactionFilterObserverManager.notify(filterData);
-        transactionPaginationManager.updateItemsPerPage();
-    });
 
     // methods
     // 거래내역

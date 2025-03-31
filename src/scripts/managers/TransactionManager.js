@@ -1,22 +1,21 @@
 class TransactionManager {
-    constructor(filterObserverManager, transactionData) {
+    constructor(filterObserverManager) {
         this._filterObserverManager = filterObserverManager;
-        this._transactionData = transactionData;
-
+        this._transactionData = null;
         this._transactionTable = document.querySelector('.content-table table tbody');
-
-        this.init();
     }
 
-    init() {
-        this._transactionTable.innerHTML = '';
+    init(transactionData) {
+        this._transactionData = transactionData;
 
+        this._transactionTable.innerHTML = '';
+        this._filterObserverManager.init();
         Object.entries(this._transactionData).forEach(([positionId, positionData]) => {
             const transaction = new TransactionBase(positionId, positionData);
 
             this._transactionTable.appendChild(transaction.getRow());
 
-            if (this._filterObserverManager) this._filterObserverManager.subscribe(transaction);
+            this._filterObserverManager.subscribe(transaction);
         });
     }
 }
@@ -72,7 +71,7 @@ class TransactionBase {
                         <p>매수 체결 수수료: <span class="fee">${this._totalBuyFee}</span></p>
                         <p>매도 체결 수수료: <span class="fee">${this._totalSellFee}</span></p>
                         <p>총 펀딩 비용: <span class="funding-cost">${this._totalFundingCost}</span></p>
-                        <p>수수료 총합: <span class="total-fee">${this._totalFee}</span></p>
+                        <p>수수료 총합: <span class="total-fee ${parseFloat(this._totalFee) < 0 ? 'lose' : 'win'}">${this._totalFee}</span></p>
                     </div>
                 </div>
             </td>
@@ -89,9 +88,19 @@ class TransactionBase {
     }
 
     filter(filterData) {
+        console.log(filterData);
+        if (!this.checkWinloseFilter(filterData)) return false;
         if (!this.checkSymbolFilter(filterData)) return false;
 
         return true;
+    }
+
+    checkWinloseFilter(filterData) {
+        const winloseData = filterData.winlose;
+        if (winloseData === 'all') {
+            return true;
+        }
+        return winloseData === this._winlose;
     }
 
     checkSymbolFilter(filterData) {

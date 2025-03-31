@@ -3,6 +3,10 @@ class TransactionFilterObserverManager {
         this._transactions = [];
     }
 
+    init() {
+        this._transactions = [];
+    }
+
     subscribe(transaction) {
         this._transactions.push(transaction);
     }

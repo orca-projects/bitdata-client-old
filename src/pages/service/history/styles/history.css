@@ -251,8 +251,11 @@ th .tooltip-btn:hover + .tooltip-content {
 .total-fee {
     font-weight: 700;
 }
-.total-fee {
+.total-fee.win {
     color: #008636;
+}
+.total-fee.lose {
+    color: #d9534f;
 }
 .final-profit:hover .tooltip-content {
     display: block;
