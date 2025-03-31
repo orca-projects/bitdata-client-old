@@ -41,7 +41,12 @@
     display: flex;
     justify-content: center;
 }
-.search-container .content-body .filter-container {
+.filter-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.filter-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -98,11 +103,6 @@
     font-weight: 700; font-size: 16px;
     color: #fff;
     background-color: #0C8CE9;
-}
-/* 코인 필터, 페이지 당 항목 수 컨테이너 */
-.content-filter > .filter-container {
-    display: flex;
-    justify-content: space-between;
 }
 /* 코인 필터 */
 .filter-symbol span {
