@@ -75,7 +75,7 @@ class TransactionBase {
                     </div>
                 </div>
             </td>
-            <td>${this._finalRoi}</td>
+            <td>${this._finalRoi}%</td>
             <td>${this._avgBuy}</td>
             <td>${this._avgSell}</td>
             <td>
