@@ -101,6 +101,80 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
         transactionPaginationManager.updateItemsPerPage();
     }
 
+    const updateBtn = document.querySelector('.update-history-btn');
+    const loadingModal = document.querySelector('.loading'); // 로딩 화면
+
+    updateBtn.addEventListener('click', relink);
+
+    async function relink() {
+        loadingModal.classList.remove('hidden');
+        await collectHistory();
+        loadingModal.classList.add('hidden');
+    }
+
+    async function collectHistory() {
+        try {
+            const request = new RequestSender().setUrl(`${SERVER_URL}/user/collect/`).setMethod('GET').send();
+
+            const timeout = new Promise((resolve) => setTimeout(resolve, 3000));
+
+            const [response] = await Promise.all([request, timeout]);
+
+            const profileData = response.profile;
+
+            const profileManager = new ProfileManager();
+            profileManager.saveData(profileData);
+
+            if (profileManager.isConnected()) {
+                collectionSuccess();
+            } else {
+                collectionFail();
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            collectionFail();
+        }
+    }
+
+    function collectionSuccess() {
+        startCountdown();
+    }
+
+    async function collectionFail() {
+        const $connectedFail = document.querySelector('.modal.connected-fail');
+
+        $connectedFail.classList.remove('hidden');
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        $connectedFail.classList.add('hidden');
+    }
+
+    const timer = document.querySelector('.update-tooltip-timer');
+
+    async function startCountdown() {
+        updateBtn.disabled = true;
+
+        let remaining = 30 * 60;
+
+        const interval = setInterval(() => {
+            timer.textContent = formatTime(remaining);
+            remaining--;
+
+            if (remaining < 0) {
+                clearInterval(interval);
+                updateBtn.disabled = false;
+                timer.textContent = '0초';
+            }
+        }, 1000);
+    }
+
+    function formatTime(seconds) {
+        const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const sec = String(seconds % 60).padStart(2, '0');
+        return `${min}분 ${sec}초`;
+    }
+
     // 메모
     // field
     // 거래내역 페이지

@@ -74,9 +74,14 @@
                                 <button class="update-history-btn" type="button">
                                     <span class="btn-text">거래 내역 최신화</span>
                                     <img src="/assets/images/button/restart.png" alt="재시작 버튼" />
-                                    <div class="tooltip-content">
+                                    <div class="tooltip-content notice">
                                         <div class="container">
                                             <p>데이터 수동 업데이트는 30분에 한번씩 가능합니다.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tooltip-content timer">
+                                        <div class="container">
+                                            <p class="update-tooltip-timer">30분 00초</p>
                                         </div>
                                     </div>
                                 </button>
@@ -302,6 +307,23 @@
                         <button type="submit" class="save-btn">저장</button>
                     </form>
                 </div>
+            </div>
+        </div>
+        <!-- [연동 재시도] 로딩 화면 -->
+        <div class="modal loading hidden">
+            <div class="modal-background"></div>
+            <div class="box">
+                <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너" />
+                <p>바이낸스 계정 및 데이터 연동 시도중...</p>
+            </div>
+        </div>
+        <!-- [연동 실패] 화면 -->
+        <div class="modal connected-fail hidden">
+            <div class="modal-background"></div>
+            <div class="box">
+                <img src="/assets/images/notice_icon.png" alt="알림 아이콘" />
+                <p class="warn">데이터 수집 불가</p>
+                <p>바이낸스 계정 연동 상태를 확인해주세요!</p>
             </div>
         </div>
 
