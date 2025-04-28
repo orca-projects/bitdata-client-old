@@ -312,7 +312,24 @@ main > .content-footer {
     line-height: 14px;
 }
 
-/* 로딩 화면 */
+/* [조회] 로딩 화면 */
+.search-loading .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.search-loading .box img {
+    width: 100px; height: 100px;
+}
+.search-loading .box p {
+    color: #fff;
+}
+
+/* [거래내역 최신화] 로딩 화면 */
 .loading .box {
     display: flex;
     flex-direction: column;
@@ -329,7 +346,7 @@ main > .content-footer {
     color: #fff;
 }
 
-/* 연동 실패 화면 */
+/* [거래내역 최신화] 연동 실패 화면 */
 .connected-fail .box {
     display: flex;
     flex-direction: column;

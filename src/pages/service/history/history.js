@@ -45,9 +45,13 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
         });
     });
 
+    const searchLoadingModal = document.querySelector('.search-loading');
+
     const fetchTransaction = async (filterData) => {
         try {
+            searchLoadingModal.classList.remove('hidden');
             const response = await new RequestSender().setUrl(`${SERVER_URL}/transaction/`).setMethod('GET').setParams(filterData).send();
+            searchLoadingModal.classList.add('hidden');
             return response;
         } catch (error) {
             console.error('API 데이터 로드 오류:', error);
