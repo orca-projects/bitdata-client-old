@@ -124,6 +124,7 @@
 
 /* 거래내역 테이블 */
 .content-table {
+    position: relative;
     min-height: 550px;
     margin-top: 20px;
     border-collapse: collapse;
@@ -347,4 +348,37 @@ main > .content-footer {
 }
 .connected-fail .box p.warn {
     color: #FF3232;
+}
+
+/* 결과 없음 */
+.empty-result {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    border: 1px solid #D8D8D8;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.empty-result .content-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.empty-result .content-box img {
+    width: 45px;
+    height: 45px;
+}
+
+.empty-result .content-box p {
+    font-weight: 700;
+    font-size: 14px;
+    color: #575757;
 }

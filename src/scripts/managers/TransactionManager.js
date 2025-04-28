@@ -88,7 +88,6 @@ class TransactionBase {
     }
 
     filter(filterData) {
-        console.log(filterData);
         if (!this.checkWinloseFilter(filterData)) return false;
         if (!this.checkSymbolFilter(filterData)) return false;
 

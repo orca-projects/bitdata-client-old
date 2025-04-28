@@ -1,6 +1,8 @@
 class TransactionPaginationManager {
     constructor() {
-        this._transactionTable = document.querySelector('.content-table table tbody');
+        this._transactionTable = document.querySelector('.content-table table');
+        this._emptyResult = document.querySelector('.content-table .empty-result');
+        this._transactionTableBody = document.querySelector('.content-table table tbody');
         this._optionItem = document.getElementById('option-item');
         this._prevStartBtn = document.querySelector('.pre-start-btn');
         this._prevBtn = document.querySelector('.pre-btn');
@@ -23,12 +25,21 @@ class TransactionPaginationManager {
 
     updateItemsPerPage() {
         this._itemsPerPage = parseInt(this._optionItem.value);
-        this._transactions = Array.from(this._transactionTable.children).filter((item) => {
+        this._transactions = Array.from(this._transactionTableBody.children).filter((item) => {
             return !item.classList.contains('hidden');
         });
-        this._totalPage = Math.ceil(this._transactions.length / this._itemsPerPage);
+        this._totalPage = Math.max(1, Math.ceil(this._transactions.length / this._itemsPerPage));
         this._curPage = 1;
         this.assignPages();
+
+        if (this._transactions.length === 0) {
+            this._transactionTable.style.display = 'none';
+            this._emptyResult.style.display = 'flex';
+        } else {
+            this._transactionTable.style.display = '';
+            this._emptyResult.style.display = 'none';
+        }
+
         this.updatePaginationUI();
     }
 
@@ -77,6 +88,10 @@ class TransactionPaginationManager {
             this.createPageButton(this._totalPage);
         }
 
+        if (this._totalPage === 0) {
+            this.createPageButton(1);
+        }
+
         this.updatePageNumbers();
     }
 
@@ -109,7 +124,7 @@ class TransactionPaginationManager {
     }
 
     updateVisibleItems() {
-        Array.from(this._transactionTable.children).forEach((item) => {
+        Array.from(this._transactionTableBody.children).forEach((item) => {
             item.style.display = item.dataset.page == this._curPage ? 'table-row' : 'none';
             if (item.classList.contains('hidden')) item.style.display = 'none';
         });
