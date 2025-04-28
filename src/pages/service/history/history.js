@@ -155,24 +155,55 @@ import TransactionPaginationManager from '@manager/TransactionPaginationManager'
     async function startCountdown() {
         updateBtn.disabled = true;
 
-        let remaining = 30 * 60;
+        const now = Date.now();
+        const endTime = now + 30 * 60 * 1000;
+        localStorage.setItem('countdown_end_time', endTime.toString());
 
+        runCountdown(endTime);
+    }
+
+    function runCountdown(endTime) {
         const interval = setInterval(() => {
-            timer.textContent = formatTime(remaining);
-            remaining--;
+            const currentTime = Date.now();
+            const remaining = Math.floor((endTime - currentTime) / 1000);
 
-            if (remaining < 0) {
+            if (remaining >= 0) {
+                timer.textContent = formatTime(remaining);
+            } else {
                 clearInterval(interval);
                 updateBtn.disabled = false;
                 timer.textContent = '0초';
+                localStorage.removeItem('countdown_end_time');
             }
-        }, 1000);
+        }, 200);
     }
 
+    function resumeCountdown() {
+        const endTime = localStorage.getItem('countdown_end_time');
+
+        if (!endTime) {
+            return;
+        }
+
+        updateBtn.disabled = true;
+
+        runCountdown(parseInt(endTime, 10));
+    }
+
+    resumeCountdown();
+
     function formatTime(seconds) {
-        const min = String(Math.floor(seconds / 60)).padStart(2, '0');
-        const sec = String(seconds % 60).padStart(2, '0');
-        return `${min}분 ${sec}초`;
+        const min = Math.floor(seconds / 60);
+        const sec = seconds % 60;
+
+        let timeStr = '';
+
+        if (min > 0) {
+            timeStr += `${min}분 `;
+        }
+        timeStr += `${sec}초`;
+
+        return timeStr;
     }
 
     // 메모
