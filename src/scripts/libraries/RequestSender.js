@@ -51,9 +51,7 @@ class RequestSender {
                 withCredentials: true,
             });
 
-            const convertedResponse = ConverterLib.convertObjectToCamel(
-                response.data
-            );
+            const convertedResponse = ConverterLib.convertObjectToCamel(response.data);
 
             if (convertedResponse.state !== 'success') {
                 throw new Error(convertedResponse.message);
@@ -61,11 +59,7 @@ class RequestSender {
 
             return convertedResponse;
         } catch (error) {
-            throw new Error(
-                error.response?.data?.message ||
-                    error.message ||
-                    'Request failed'
-            );
+            throw new Error(error.response?.data?.message || error.message || 'Request failed');
         }
     }
 
@@ -73,9 +67,9 @@ class RequestSender {
         if (this.isPost()) {
             await this.setHeadersCsrfToken();
 
-            this.data = this.data
-                ? ConverterLib.convertObjectToSnake(this.data)
-                : undefined;
+            this.data = this.data ? ConverterLib.convertObjectToSnake(this.data) : undefined;
+        } else {
+            this.params = this.params ? ConverterLib.convertObjectToSnake(this.params) : undefined;
         }
     }
 

@@ -15,16 +15,41 @@
     width: 1450px; height: 100%;
     padding: 0 30px;
 }
+.content > header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.content > header .notice {
+    color: #CFCFCF;
+}
 /* 필터 영역 */
-/* 각 필터 */
-.filter-container {
-    margin-top: 50px;
+.content-filter input {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+/* 조회 */
+.search-container {
+    margin: 30px 0;
+}
+.search-container .content-body {
     display: flex;
     justify-content: space-between;
 }
-.filter-container input {
-    padding: 5px 10px;
-    border-radius: 5px;
+.search-container .content-footer {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+.filter-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 /* 승패 필터 */
 .filter-winlose span,
@@ -42,6 +67,7 @@
 .filter-winlose input[type='radio'] {
     accent-color: #0C8CE9;
     outline: none;
+    cursor: pointer;
 }
 /* 날짜 필터 */
 .filter-date span {
@@ -56,6 +82,28 @@
     text-align: center;
     font-size: 14px;
     color: #0C8CE9;
+}
+/* 거래 내역 최신화 버튼 */
+.update-history-btn {
+    box-sizing: border-box;
+    height: 34px;
+    padding: 6px 10px;
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.update-history-btn .btn-text {
+    font-weight: 700; font-size: 14px;
+    color: #575757;
+}
+.search-btn {
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-weight: 700; font-size: 16px;
+    color: #fff;
+    background-color: #0C8CE9;
 }
 /* 코인 필터 */
 .filter-symbol span {
@@ -77,6 +125,7 @@
 
 /* 거래내역 테이블 */
 .content-table {
+    position: relative;
     min-height: 550px;
     margin-top: 20px;
     border-collapse: collapse;
@@ -91,7 +140,7 @@
 }
 .content-table th, 
 .content-table td {
-    padding: 12px 18px;
+    padding: 12px 12px;
     text-align: center;
     vertical-align: middle;
     border: none;
@@ -99,13 +148,15 @@
 }
 /* 포지션 텍스트 강조 */
 /* 승 색상 강조 */
-.content-table tr.win > td:nth-child(5), 
-.content-table tr.win > td:nth-child(6) {
+.content-table tr.win > td:nth-child(7), 
+.content-table tr.win > td:nth-child(8),
+.content-table tr.win > td:nth-child(9) {
     color: #008636;
 }
 /* 패 색상 강조 */
-.content-table tr.lose > td:nth-child(5), 
-.content-table tr.lose > td:nth-child(6) {
+.content-table tr.lose > td:nth-child(7), 
+.content-table tr.lose > td:nth-child(8), 
+.content-table tr.lose > td:nth-child(9) {
     color: #d9534f;
 }
 /* 돋보기 버튼 */
@@ -143,30 +194,220 @@
 .content-table td .image-memo-btn img {
     width: 20px; height: 20px;
 }
+/* 툴팁 */
+.content-table th {
+    position: relative;
+}
+.tooltip-btn {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+.tooltip-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    text-align: left;
+    white-space: nowrap;
+}
+.tooltip-content .container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+th .tooltip-btn:hover + .tooltip-content {
+    display: block;
+    bottom: 50px;
+}
+.filter-winlose {
+    position: relative;
+}
+.filter-winlose .tooltip-btn:hover + .tooltip-content {
+    display: block;
+    top: 30px;
+}
+/* 거래 내역 최신화 */
+.update-history-btn {
+    position: relative;
+}
+.update-history-btn:disabled .btn-text{
+    color: #ABABAB;
+}
+.update-history-btn:hover:not([disabled]) .tooltip-content.notice {
+    display: block;
+    right: 145px;
+}
+.update-history-btn[disabled]:hover .tooltip-content.timer {
+    display: block;
+    right: 145px;
+}
+/* 최종 손익률 */
+.final-profit {
+    position: relative;
+    cursor: pointer;
+}
+.final-profit .text{
+    border-bottom: 1px solid;
+}
+.fee, 
+.funding-cost,
+.total-fee {
+    font-weight: 700;
+}
+.total-fee.win {
+    color: #008636;
+}
+.total-fee.lose {
+    color: #d9534f;
+}
+.final-profit:hover .tooltip-content {
+    display: block;
+    top: 50px;
+}
 
 /* 콘텐츠 푸터 영역 */
-.content-footer {
+main > .content-footer {
     margin-bottom: 70px;
 }
 /* 페이지 네이션 */
 .pagination-number {
+    position: relative;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.pre-start-btn,
+.pre-btn,
+.next-btn,
+.next-end-btn {
+    position: absolute;
+}
+.pre-start-btn {left: 450px;}
+.pre-btn {left: 490px;}
+.next-btn {right: 490px;}
+.next-end-btn {right: 450px;}
 .pagination-number button {
+    padding: 8px;
+    border-radius: 20%;
     margin: 5px;
+    font-size: 0px;
 }
 .pagination-number button img {
     width: 12px; height: 12px;
 }
 .pagination-number .page-number-btn {
-    width: 20px; height: 20px;
-    border-radius: 20%;
+    width: 28px; height: 28px;
     font-size: 16px;
+    line-height: 14px;
 }
 .pagination-number .page-number-btn.current-page {
     background-color: #0C8CE9;
     color: #fff;
+}
+.pagination-number button:disabled {
+    background-color: #f0f0f0;
+}
+.pagination-ellipsis {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 28px; height: 28px;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 14px;
+}
+
+/* [조회] 로딩 화면 */
+.search-loading .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.search-loading .box img {
+    width: 100px; height: 100px;
+}
+.search-loading .box p {
+    color: #fff;
+}
+
+/* [거래내역 최신화] 로딩 화면 */
+.loading .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.loading .box img {
+    width: 100px; height: 100px;
+}
+.loading .box p {
+    color: #fff;
+}
+
+/* [거래내역 최신화] 연동 실패 화면 */
+.connected-fail .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.connected-fail .box img {
+    width: 100px; height: 100px;
+}
+.connected-fail .box p {
+    color: #fff;
+}
+.connected-fail .box p.warn {
+    color: #FF3232;
+}
+
+/* 결과 없음 */
+.empty-result {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    border: 1px solid #D8D8D8;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.empty-result .content-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.empty-result .content-box img {
+    width: 45px;
+    height: 45px;
+}
+
+.empty-result .content-box p {
+    font-weight: 700;
+    font-size: 14px;
+    color: #575757;
 }

@@ -24,7 +24,6 @@ async function removeEmptyDirs(dir) {
 
     if (files.length === 0) {
         await fs.rmdir(dir);
-        // console.log(`Deleted empty directory: ${dir}`);
         const parentDir = dirname(dir);
         if (parentDir !== dir) {
             await removeEmptyDirs(parentDir); // 부모 디렉토리도 확인
