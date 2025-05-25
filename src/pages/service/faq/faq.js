@@ -1,5 +1,8 @@
 import './styles/faq.css';
 
+import { SERVER_URL } from '@constant/apiConstant';
+import RequestSender from '@library/RequestSender';
+
 const $faqs = document.querySelectorAll('.faq');
 const $exitBtn = document.querySelector('.exit-btn');
 
@@ -19,7 +22,7 @@ $exitBtn.addEventListener('click', openExitModal);
 
 $exitModalCloseBtn.addEventListener('click', closeExitModal);
 
-// $exitModalExitReason.addEventListener('input', inputExitReason);
+$exitModalExitReason.addEventListener('input', inputExitReason);
 
 $exitModalSubmitBtn.addEventListener('click', (event) => {
     if (!$exitModalSubmitBtn.classList.contains('active')) {
@@ -27,9 +30,15 @@ $exitModalSubmitBtn.addEventListener('click', (event) => {
     }
 });
 
-$exitModalFrm.addEventListener('submit', (event) => {
+$exitModalFrm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    submitEixt();
+    const result = await submitEixt();
+
+    if (!result) {
+        return;
+    }
+
+    window.location.href = '/exit';
 });
 
 function expandAnswer() {
@@ -75,6 +84,23 @@ function inputExitReason() {
     }
 }
 
-function submitEixt() {
-    window.location.href = '/exit';
+async function submitEixt() {
+    const withdrawReason = $exitModalExitReason.value;
+
+    try {
+        const response = await new RequestSender()
+            .setUrl(`${SERVER_URL}/user/withdraw/`)
+            .setMethod('POST')
+            .setData({
+                withdrawReason: withdrawReason,
+            })
+            .send();
+
+        const result = response.result;
+
+        return result;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }

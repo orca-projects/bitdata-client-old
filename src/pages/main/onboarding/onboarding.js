@@ -1,10 +1,6 @@
 import './onboarding.css';
 
-import {
-    checkInputValue,
-    noticeInputField,
-    checkActive,
-} from '/src/components/key-input-field.js';
+import { checkInputValue, noticeInputField, checkActive } from '/src/components/key-input-field.js';
 import { maskingShowBtn } from '/src/components/eye-button.js';
 
 import { SERVER_URL } from '@constant/apiConstant';
@@ -65,10 +61,7 @@ async function spendApiKey() {
 
         window.location.href = '/collect';
     } catch (error) {
-        console.error(
-            'Callback Error:',
-            error.message || 'Internal Server Error'
-        );
+        console.error('Callback Error:', error.message || 'Internal Server Error');
         alert(error.message || 'An error occurred. Please try again.');
     }
 }
