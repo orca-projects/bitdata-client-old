@@ -3,6 +3,13 @@ import './styles/faq.css';
 import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
 
+import { checkAuthorization } from '@library/CommonLib.js';
+import { logout } from '@library/ServiceCommonLib.js';
+
+window.addEventListener('pageshow', async () => {
+    await checkAuthorization('API_KEY');
+});
+
 const $faqs = document.querySelectorAll('.faq');
 const $exitBtn = document.querySelector('.exit-btn');
 
@@ -104,3 +111,16 @@ async function submitEixt() {
         return false;
     }
 }
+
+// 로그아웃
+const logoutBtn = document.querySelector('.logout-btn');
+
+logoutBtn.addEventListener('click', async function () {
+    const result = await logout();
+
+    if (result) {
+        window.location.href = '/';
+    } else {
+        alert('로그아웃에 실패 했습니다.');
+    }
+});
