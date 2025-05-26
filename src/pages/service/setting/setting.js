@@ -1,17 +1,18 @@
 import './styles/setting.css';
+import { checkAuthorization } from '@library/CommonLib.js';
+import { logout } from '@library/ServiceCommonLib.js';
 
-import {
-    checkInputValue,
-    noticeInputField,
-    checkActive,
-    clearInputField,
-} from '/src/components/key-input-field.js';
+import { checkInputValue, noticeInputField, checkActive, clearInputField } from '/src/components/key-input-field.js';
 
 import { maskingShowBtn } from '/src/components/eye-button.js';
 
 import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
 import ProfileManager from '@manager/ProfileManager';
+
+window.addEventListener('pageshow', async () => {
+    await checkAuthorization();
+});
 
 const profileManager = new ProfileManager();
 
@@ -47,17 +48,11 @@ const $settingBtn = document.querySelector('.setting-btn'); // [설정하기] �
 const $loadingModal = document.querySelector('.loading'); // 로딩 화면
 
 const $binanceSettingModal = document.querySelector('.binance-setting'); // 바이낸스 계정 연동 모달
-const $binanceSettingModalCloseBtn = document.querySelector(
-    '.binance-setting .close-btn'
-); // [닫기] 버튼
-const $binanceSettingModalApifrm = document.querySelector(
-    '#api-management-frm'
-); // api 관리 폼
+const $binanceSettingModalCloseBtn = document.querySelector('.binance-setting .close-btn'); // [닫기] 버튼
+const $binanceSettingModalApifrm = document.querySelector('#api-management-frm'); // api 관리 폼
 const $binanceSettingModalApiKeyInputField = document.querySelector('#api-key'); // api key 입력란
-const $binanceSettingModalSecretKeyInputField =
-    document.querySelector('#secret-key'); // secret key 입력란
-const $binanceSettingModalSecretKeyInputFieldEyeBtn =
-    document.querySelector('.eye'); // [보기/숨기기] 버튼
+const $binanceSettingModalSecretKeyInputField = document.querySelector('#secret-key'); // secret key 입력란
+const $binanceSettingModalSecretKeyInputFieldEyeBtn = document.querySelector('.eye'); // [보기/숨기기] 버튼
 const $binanceSettingModalSettingBtn = document.querySelector('.save-btn'); // [설정] 버튼
 
 $relinkBtn.addEventListener('click', relink);
@@ -90,16 +85,10 @@ $binanceSettingModalSecretKeyInputField.addEventListener('input', (event) => {
     );
 });
 
-$binanceSettingModalSecretKeyInputFieldEyeBtn.addEventListener(
-    'mousedown',
-    () => {
-        // [보기/숨기기] 버튼 마스킹
-        maskingShowBtn(
-            $binanceSettingModalSecretKeyInputField,
-            $binanceSettingModalSecretKeyInputFieldEyeBtn
-        );
-    }
-);
+$binanceSettingModalSecretKeyInputFieldEyeBtn.addEventListener('mousedown', () => {
+    // [보기/숨기기] 버튼 마스킹
+    maskingShowBtn($binanceSettingModalSecretKeyInputField, $binanceSettingModalSecretKeyInputFieldEyeBtn);
+});
 
 $binanceSettingModalSettingBtn.addEventListener('click', (evnet) => {
     if (!$binanceSettingModalSettingBtn.classList.contains('active')) {
@@ -158,20 +147,14 @@ async function spendApiKey() {
             })
             .send();
     } catch (error) {
-        console.error(
-            'Callback Error:',
-            error.message || 'Internal Server Error'
-        );
+        console.error('Callback Error:', error.message || 'Internal Server Error');
         alert(error.message || 'An error occurred. Please try again.');
     }
 }
 
 async function collectHistory() {
     try {
-        const request = new RequestSender()
-            .setUrl(`${SERVER_URL}/user/collect/`)
-            .setMethod('GET')
-            .send();
+        const request = new RequestSender().setUrl(`${SERVER_URL}/user/collect/`).setMethod('GET').send();
 
         const timeout = new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -204,3 +187,16 @@ async function collectionFail() {
 
     $connectedFail.classList.add('hidden');
 }
+
+// 로그아웃
+const logoutBtn = document.querySelector('.logout-btn');
+
+logoutBtn.addEventListener('click', async function () {
+    const result = await logout();
+
+    if (result) {
+        window.location.href = '/';
+    } else {
+        alert('로그아웃에 실패 했습니다.');
+    }
+});
