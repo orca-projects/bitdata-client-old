@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitData | 로그인</title>
-    <!-- favicon -->
-    <link rel="icon" href="/bitdata_icon.ico" type="image/png">
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w,d,s,l,i){
-            w[l]=w[l]||[];
-            w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-            var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-            j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-            f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5CP2FVDL');
-    </script>
-    <!-- End Google Tag Manager -->
-</head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-     
-    <div class="layout">
-        <header>
-            <a href="/" class="logo">BitData</a>
-        </header>
-        <main>
-            <h2 class="mb-30">로그인/회원가입</h2>
-            <p class="mb-10">귀찮은 입력 없이 카카오로 쉽고 빠르게 진행하세요.</p>
-            <button class="kakao-login-btn">카카오 1초 접속하기</button>
-        </main>
-    </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BitData | 로그인</title>
+        <!-- favicon -->
+        <link rel="icon" href="/bitdata_icon.ico" type="image/png" />
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CP2FVDL');
+        </script>
+        <!-- End Google Tag Manager -->
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display: none; visibility: hidden"></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-    <!-- js -->
-    <script type="module" src="./login.js"></script>
-</body>
+        <div class="layout">
+            <header>
+                <a href="/" class="logo">BitData</a>
+            </header>
+            <main>
+                <h2 class="title">로그인/회원가입</h2>
+                <p class="sub-title">귀찮은 입력 없이 카카오로 쉽고 빠르게 진행하세요.</p>
+                <button class="kakao-login-btn">카카오 1초 접속하기</button>
+            </main>
+            <footer>
+                <div class="notice mo-only">
+                    <p>※ 저희 서비스는 PC로 이용하시는것을 권장드립니다.</p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- js -->
+        <script type="module" src="./login.js"></script>
+    </body>
 </html>
