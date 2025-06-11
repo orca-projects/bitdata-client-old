@@ -2,51 +2,32 @@ import './join.css';
 
 import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
+import { checkAuthorization } from '@library/CommonLib.js';
+
+window.addEventListener('pageshow', async () => {
+    await checkAuthorization('KAKAO_LOGIN');
+});
 
 const $checkAllCheckBox = document.querySelector('#check-all-checkbox');
-const $termsOfServiceCheckBox = document.querySelector(
-    '#terms-of-service-checkbox'
-);
+const $termsOfServiceCheckBox = document.querySelector('#terms-of-service-checkbox');
 const $fullTermsOfServiceBtn = document.querySelector('.full-terms-of-service');
-const $privacyPolicyCheckbox = document.querySelector(
-    '#privacy-policy-checkbox'
-);
+const $privacyPolicyCheckbox = document.querySelector('#privacy-policy-checkbox');
 const $fullPrivacyPolicyBtn = document.querySelector('.full-privacy-policy');
-const $ageConfirmationCheckbox = document.querySelector(
-    '#age-confirmation-checkbox'
-);
-const $ageConfirmationNoticeBtn = document.querySelector(
-    '.age-confirmation-notice'
-);
+const $ageConfirmationCheckbox = document.querySelector('#age-confirmation-checkbox');
+const $ageConfirmationNoticeBtn = document.querySelector('.age-confirmation-notice');
 const $termsOfServiceModal = document.querySelector('.terms-of-service-modal');
-const $termsOfServiceModalCloseBtn = document.querySelector(
-    '.terms-of-service-modal .close-btn'
-);
-const $termsOfServiceModalAgreeBtn = document.querySelector(
-    '.terms-of-service-modal .agree-btn'
-);
+const $termsOfServiceModalCloseBtn = document.querySelector('.terms-of-service-modal .close-btn');
+const $termsOfServiceModalAgreeBtn = document.querySelector('.terms-of-service-modal .agree-btn');
 const $privacyPolicyModal = document.querySelector('.privacy-policy-modal');
-const $privacyPolicyModalCloseBtn = document.querySelector(
-    '.privacy-policy-modal .close-btn'
-);
-const $privacyPolicyeModalAgreeBtn = document.querySelector(
-    '.privacy-policy-modal .agree-btn'
-);
+const $privacyPolicyModalCloseBtn = document.querySelector('.privacy-policy-modal .close-btn');
+const $privacyPolicyeModalAgreeBtn = document.querySelector('.privacy-policy-modal .agree-btn');
 const $ageConfirmationModal = document.querySelector('.age-confirmation-modal');
-const $ageConfirmationModalCloseBtn = document.querySelector(
-    '.age-confirmation-modal .close-btn'
-);
-const $ageConfirmationModalAgreeBtn = document.querySelector(
-    '.age-confirmation-modal .agree-btn'
-);
+const $ageConfirmationModalCloseBtn = document.querySelector('.age-confirmation-modal .close-btn');
+const $ageConfirmationModalAgreeBtn = document.querySelector('.age-confirmation-modal .agree-btn');
 const $nextBtn = document.querySelector('.next-btn');
 
 const activeNextBtn = function () {
-    if (
-        $termsOfServiceCheckBox.checked &&
-        $privacyPolicyCheckbox.checked &&
-        $ageConfirmationCheckbox.checked
-    ) {
+    if ($termsOfServiceCheckBox.checked && $privacyPolicyCheckbox.checked && $ageConfirmationCheckbox.checked) {
         $checkAllCheckBox.checked = true;
         $nextBtn.classList.add('active');
     } else {
@@ -118,17 +99,11 @@ $ageConfirmationModalAgreeBtn.addEventListener('click', function () {
 
 const join = async () => {
     try {
-        await new RequestSender()
-            .setUrl(`${SERVER_URL}/authn/join/`)
-            .setMethod('get')
-            .send();
+        await new RequestSender().setUrl(`${SERVER_URL}/authn/join/`).setMethod('get').send();
 
         window.location.href = 'onboarding';
     } catch (error) {
-        console.error(
-            'Callback Error:',
-            error.message || 'Internal Server Error'
-        );
+        console.error('Callback Error:', error.message || 'Internal Server Error');
         alert(error.message || 'An error occurred. Please try again.');
     }
 };

@@ -7,12 +7,7 @@ import { checkAuthorization } from '@library/CommonLib.js';
 import { logout } from '@library/ServiceCommonLib.js';
 
 window.addEventListener('pageshow', async () => {
-    const isAllowed = await checkAuthorization();
-    if (!isAllowed) {
-        alert('접근 권한이 없습니다. 메인 페이지로 이동합니다.');
-        window.location.href = '/';
-        return;
-    }
+    await checkAuthorization('API_KEY');
 });
 
 const $faqs = document.querySelectorAll('.faq');

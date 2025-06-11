@@ -1,6 +1,6 @@
 .layout {
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
 }
 
@@ -14,7 +14,7 @@ aside {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1px solid #8E8E8E;
+    border-right: 1px solid #8e8e8e;
 }
 /* 사이드 네비게이션 바 */
 /* 타이틀 */
@@ -22,7 +22,7 @@ aside header {
     margin-bottom: 100px;
 }
 aside header h1 {
-    color: #0C8CE9;
+    color: #0c8ce9;
 }
 /* 메뉴 */
 aside .sidebar-menu {
@@ -42,23 +42,26 @@ aside footer {
     margin-top: auto;
 }
 aside footer .logout-btn {
-    width: 145px; height: 35px;
-    border: 1px solid #8E8E8E;
+    width: 145px;
+    height: 35px;
+    border: 1px solid #8e8e8e;
     color: #363636;
 }
 
 .content {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     overflow: auto;
 }
 .content > header {
     box-sizing: border-box;
-    width: 100%; height: 70px;
+    width: 100%;
+    height: 70px;
     min-width: 1450px;
     padding: 0px 30px;
-    border-bottom: 1px solid #8E8E8E;
+    border-bottom: 1px solid #8e8e8e;
     color: #575757;
 }
 .content > header .title {

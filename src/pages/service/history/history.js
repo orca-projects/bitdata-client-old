@@ -10,12 +10,7 @@ import TransactionManager from '@manager/TransactionManager';
 import TransactionPaginationManager from '@manager/TransactionPaginationManager';
 
 window.addEventListener('pageshow', async () => {
-    const isAllowed = await checkAuthorization();
-    if (!isAllowed) {
-        alert('접근 권한이 없습니다. 메인 페이지로 이동합니다.');
-        window.location.href = '/';
-        return;
-    }
+    await checkAuthorization('API_KEY');
 });
 
 (async () => {

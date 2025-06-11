@@ -1,23 +1,75 @@
-@import "/src/styles/reset.css";
-@import "/src/styles/default.css";
+@import '/src/styles/reset.css';
+@import '/src/styles/default.css';
 
 .layout {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 /* 로고 */
-header {
-    margin-bottom: 250px;
-}
 .logo {
     display: block;
 }
 
 /* 로그인 content */
 main .kakao-login-btn {
-    width: 410px; height: 60px;
+    box-sizing: border-box;
+    width: 410px;
+    height: 60px;
+    font-size: 14px;
     font-weight: 700;
-    background-color: #F4E54E;
+    background-color: #f4e54e;
+    color: #000;
+}
+
+@media (min-width: 768px) {
+    .mo-only {
+        display: none !important;
+    }
+
+    .layout {
+        height: 80dvh;
+    }
+
+    main .title {
+        margin-bottom: 30px;
+    }
+    main .sub-title {
+        margin-bottom: 10px;
+    }
+
+    main .kakao-login-btn {
+        width: 410px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 767px) {
+    .pc-only {
+        display: none !important;
+    }
+
+    .layout {
+        height: 80dvh;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    main .title {
+        margin-bottom: 50px;
+    }
+    main .sub-title {
+        margin-bottom: 10px;
+    }
+
+    main .kakao-login-btn {
+        width: 374px;
+        height: 60px;
+    }
 }

@@ -6,6 +6,12 @@ import { maskingShowBtn } from '/src/components/eye-button.js';
 import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
 
+import { checkAuthorization } from '@library/CommonLib.js';
+
+window.addEventListener('pageshow', async () => {
+    await checkAuthorization('LOGIN');
+});
+
 const $apiManagementFrm = document.querySelector('#api-management-frm'); // API Management 폼
 const $apiKeyInputField = document.querySelector('#api-key'); // api-key 입력란
 const $secretKeyInputField = document.querySelector('#secret-key'); // secret-key 입력란
