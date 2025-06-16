@@ -83,7 +83,7 @@ class ProfileManager {
     }
 
     getBinanceUid() {
-        return Number(this._binanceUid);
+        return this._binanceUid;
     }
 }
 
