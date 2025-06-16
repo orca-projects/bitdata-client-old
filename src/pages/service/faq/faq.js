@@ -37,17 +37,6 @@ $exitModalSubmitBtn.addEventListener('click', (event) => {
     }
 });
 
-$exitModalFrm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const result = await submitEixt();
-
-    if (!result) {
-        return;
-    }
-
-    window.location.href = '/exit';
-});
-
 function expandAnswer() {
     const $expandArrowBtnImg = this.querySelector('img');
     const $answerBlock = this.closest('.faq').querySelector('.answer-block');
@@ -83,15 +72,27 @@ function closeExitModal() {
     $exitModalSubmitBtn.classList.remove('active');
 }
 
+/* byte counter 추가  ORPJ-95 > ORPJ-109 */
+const byteCounter = document.querySelector('.byte-counter');
+
+function getByteLength(str) {
+    return new Blob([str]).size;
+}
+
 function inputExitReason() {
-    if ($exitModalExitReason.value == '') {
+    const inputVal = $exitModalExitReason.value;
+    const byteLength = getByteLength(inputVal);
+    
+    byteCounter.textContent = `${byteLength} / 150 bytes`;
+
+    if (inputVal === '' || byteLength > 150) {
         $exitModalSubmitBtn.classList.remove('active');
     } else {
         $exitModalSubmitBtn.classList.add('active');
     }
 }
 
-async function submitEixt() {
+async function submitExit() {
     const withdrawReason = $exitModalExitReason.value;
 
     try {
@@ -112,6 +113,20 @@ async function submitEixt() {
     }
 }
 
+/* 회원탈퇴 버튼 클릭 시, 최종 알럿 노출 ORPJ-95 > ORPJ-109 */
+$exitModalFrm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const confirmResult = confirm('정말 탈퇴하시겠습니까?');
+    if (!confirmResult) return;
+
+    const result = await submitExit();
+
+    if (result) {
+        window.location.href = '/exit';
+    }
+});
+
 // 로그아웃
 const logoutBtn = document.querySelector('.logout-btn');
 
@@ -124,3 +139,5 @@ logoutBtn.addEventListener('click', async function () {
         alert('로그아웃에 실패 했습니다.');
     }
 });
+
+
