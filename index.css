@@ -96,6 +96,7 @@
         margin-bottom: 20px;
         font-size: 24px;
         font-weight: 700;
+        text-decoration: underline; /* ORPJ-95 > ORPJ-107 추가 */
     }
     .section-1 .content .slogan-container {
         font-size: 24px;

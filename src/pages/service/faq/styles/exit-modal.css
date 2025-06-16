@@ -63,3 +63,11 @@
     color: #fff;
     cursor: pointer;
 }
+
+/* byte counter 추가  ORPJ-95 > ORPJ-109 */
+.exit .modal-body .exit-reason-block .byte-counter {
+    text-align: right;
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
+}
