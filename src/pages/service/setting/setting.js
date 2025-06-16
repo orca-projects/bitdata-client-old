@@ -10,9 +10,14 @@ import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
 import ProfileManager from '@manager/ProfileManager';
 
-window.addEventListener('pageshow', async () => {
-    await checkAuthorization('API_KEY');
-});
+
+if (sessionStorage.getItem('redirectedFromAuth') === 'true') {
+    sessionStorage.removeItem('redirectedFromAuth');
+} else {
+    window.addEventListener('pageshow', async () => {
+        await checkAuthorization('API_KEY');
+    });
+}
 
 const profileManager = new ProfileManager();
 

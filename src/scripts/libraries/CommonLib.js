@@ -5,9 +5,7 @@ const checkAuthorization = async (type) => {
         const url = getAuthorizationUrl(type);
         const response = await fetchAuthorization(url);
 
-        if (!response.ok) {
-            throw new Error('Invalid response');
-        }
+
 
         const data = await response.json();
         const state = data.state;
@@ -18,7 +16,8 @@ const checkAuthorization = async (type) => {
 
             case 'NEED_API_KEY':
                 alert('API 키가 등록되어 있지 않습니다. 키 등록 페이지로 이동합니다.');
-                window.location.href = '/onboarding';
+                sessionStorage.setItem('redirectedFromAuth', 'true');
+                window.location.href = '/setting';
                 break;
 
             case 'UNAUTHORIZED':
