@@ -1,66 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitData</title>
-    <!-- favicon -->
-    <link rel="icon" href="/bitdata_icon.ico" type="image/png">
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w,d,s,l,i){
-            w[l]=w[l]||[];
-            w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-            var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-            j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-            f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5CP2FVDL');
-    </script>
-    <!-- End Google Tag Manager -->
-</head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-     
-    <header>
-        <p class="logo">BitData</p>
-    </header>
-    <main>
-        <header>
-            <h1 class="p-5">바이낸스 계정을 연동해주세요!</h1>
-            <a href="/assets/pdf/binance-api-connection-guide-join.pdf" class="pdf-link" target="_blank" rel="noreferrer">바이낸스 계정연동 설명서 보기</a>
-            <p class="notice">※ Key 값이 외부 유출되지 않도록 절대 유의해주세요.</p>
-        </header>
-        <div class="content">
-            <form action="" id="api-management-frm">
-                <div class="input-block">
-                    <label for="api-key">API Key</label>
-                    <input 
-                        type="text" 
-                        id="api-key" 
-                        class="key-input" 
-                        placeholder="API Key를 입력해주세요">
-                    <p class="notice hidden">※ API Key 를 다시 한번 확인해주세요.</p>
-                </div>
-                <div class="input-block">
-                    <label for="secret-key">Secret Key</label>
-                    <div class="input-field">
-                        <input 
-                            type="password" 
-                            id="secret-key" 
-                            class="key-input" 
-                            placeholder="Secret Key를 입력해주세요">
-                        <button type="button" class="eye"></button>
-                    </div>
-                    <p class="notice hidden">※ Secret Key 를 다시 한번 확인해주세요.</p>
-                </div>
-                <button type="submit" class="start-btn">빗데이터 시작하기!</button>
-            </form>
-        </div>
-    </main>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BitData</title>
+        <!-- favicon -->
+        <link rel="icon" href="/bitdata_icon.ico" type="image/png" />
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CP2FVDL');
+        </script>
+        <!-- End Google Tag Manager -->
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display: none; visibility: hidden"></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-    <!-- js -->
-    <script type="module" src="./onboarding.js"></script>
-</body>
+        <header>
+            <p class="logo">BitData</p>
+        </header>
+        <main>
+            <header>
+                <h1 class="p-5">바이낸스 계정을 연동해주세요!</h1>
+                <a href="/assets/pdf/binance-api-connection-guide-join.pdf" class="pdf-link" target="_blank" rel="noreferrer">바이낸스 계정 연동 설명서 보기</a>
+                <p class="notice">※ Key 값이 외부 유출되지 않도록 절대 유의해주세요.</p>
+            </header>
+            <div class="content">
+                <form action="" id="api-management-frm">
+                    <div class="input-block">
+                        <label for="api-key">API Key</label>
+                        <input type="text" id="api-key" class="key-input" placeholder="API Key를 입력해주세요" />
+                        <p class="notice hidden">※ API Key 를 다시 한번 확인해주세요.</p>
+                    </div>
+                    <div class="input-block">
+                        <label for="secret-key">Secret Key</label>
+                        <div class="input-field">
+                            <input type="password" id="secret-key" class="key-input" placeholder="Secret Key를 입력해주세요" />
+                            <button type="button" class="eye"></button>
+                        </div>
+                        <p class="notice hidden">※ Secret Key 를 다시 한번 확인해주세요.</p>
+                    </div>
+                    <button type="submit" class="start-btn">빗데이터 시작하기!</button>
+                </form>
+            </div>
+        </main>
+
+        <!-- js -->
+        <script type="module" src="./onboarding.js"></script>
+    </body>
 </html>
