@@ -11,13 +11,9 @@ import RequestSender from '@library/RequestSender';
 import ProfileManager from '@manager/ProfileManager';
 
 
-if (sessionStorage.getItem('redirectedFromAuth') === 'true') {
-    sessionStorage.removeItem('redirectedFromAuth');
-} else {
-    window.addEventListener('pageshow', async () => {
-        await checkAuthorization('API_KEY');
-    });
-}
+window.addEventListener('pageshow', async () => {
+    await checkAuthorization('API_KEY');
+});
 
 const profileManager = new ProfileManager();
 

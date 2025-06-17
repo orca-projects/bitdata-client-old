@@ -32,15 +32,12 @@ const callback = async () => {
 };
 
 const getRedirectByMemberState = (response) => {
-    // 회원이 아닌 경우 → 회원가입 페이지로
     if (!response.isMember) {
         return '/join';
     }
-    // 회원이지만 API 키가 없는 경우 → 설정 페이지로
     if (!response.hasBinanceKey) {
-        return '/collect';
+        return '/onboarding';
     }
-    // 회원이고 API 키도 있는 경우 → 수집 페이지로
     if (response.hasBinanceKey) {
         return '/collect';
     }

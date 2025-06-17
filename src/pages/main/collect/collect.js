@@ -29,11 +29,6 @@ async function collectHistory() {
         }
     } catch (error) {
         console.error('Error:', error.message);
-
-        if (error?.response?.data?.state === 'NEED_API_KEY') {
-            window.location.href = '/setting';
-            return;
-        }
         collectionFail();
     }
 }
