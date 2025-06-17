@@ -6,7 +6,7 @@ const checkAuthorization = async (type) => {
         const response = await fetchAuthorization(url);
 
         if(!response.ok) {
-            throw new Error('Invalid response')
+            throw new Error('Invalid response');
         }
 
 
