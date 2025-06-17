@@ -5,9 +5,23 @@ import RequestSender from '@library/RequestSender';
 
 import { checkAuthorization } from '@library/CommonLib.js';
 import { logout } from '@library/ServiceCommonLib.js';
+import { checkNextStep } from '@library/ServiceCommonLib';
+
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('API_KEY');
+    const nextStep = await checkNextStep();
+    switch (nextStep) {
+        case 'onboarding':
+            window.location.href = '/onboarding';
+            return;
+        case 'setting':
+            window.location.href = '/setting';
+            return;
+        case 'collect':
+        default:
+            break;
+    }
 });
 
 const $faqs = document.querySelectorAll('.faq');

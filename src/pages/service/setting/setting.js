@@ -1,6 +1,8 @@
 import './styles/setting.css';
 import { checkAuthorization } from '@library/CommonLib.js';
 import { logout } from '@library/ServiceCommonLib.js';
+import { checkNextStep } from '@library/ServiceCommonLib';
+
 
 import { checkInputValue, noticeInputField, checkActive, clearInputField } from '/src/components/key-input-field.js';
 
@@ -13,6 +15,20 @@ import ProfileManager from '@manager/ProfileManager';
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('API_KEY');
+    const nextStep = await checkNextStep();
+
+    switch (nextStep) {
+        case 'onboarding':
+            window.location.href = '/onboarding';
+            return;
+        case 'setting':
+            window.location.href = '/setting';
+            return;
+        case 'collect':
+        default:
+            // 아무 문제 없으면 대시보드 정상 진입
+            break;
+    }
 });
 
 const profileManager = new ProfileManager();

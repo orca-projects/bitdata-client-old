@@ -19,6 +19,7 @@ const checkAuthorization = async (type) => {
                 return;
 
             case 'NEED_API_KEY':
+                if (window.location.pathname === '/collect') return;
                 alert('API 키가 등록되어 있지 않습니다. 키 등록 페이지로 이동합니다.');
                 window.location.href = '/onboarding';
                 break;
@@ -29,6 +30,11 @@ const checkAuthorization = async (type) => {
                 window.location.href = '/';
         }
     } catch (error) {
+        const ignoredPaths = ['/collect', '/setting'];
+
+        if (ignoredPaths.includes(window.location.pathname)) {
+            return;
+        }
         alert('인증 과정에서 문제가 발생했습니다. 메인 페이지로 이동합니다.');
         window.location.href = '/';
     }

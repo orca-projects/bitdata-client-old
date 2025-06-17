@@ -35,7 +35,7 @@ const getRedirectByMemberState = (response) => {
     if (!response.isMember) {
         return '/join';
     }
-    if (!response.hasBinanceKey) {
+    if (response.isMember && !response.hasBinanceKey) {
         return '/onboarding';
     }
     if (response.hasBinanceKey) {

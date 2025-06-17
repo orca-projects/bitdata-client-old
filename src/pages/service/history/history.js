@@ -3,14 +3,31 @@ import './styles/history.css';
 import { checkAuthorization } from '@library/CommonLib.js';
 import { logout } from '@library/ServiceCommonLib.js';
 import { SERVER_URL } from '@constant/apiConstant';
+import { checkNextStep } from '@library/ServiceCommonLib';
+
 import RequestSender from '@library/RequestSender';
 import ProfileManager from '@manager/ProfileManager';
 import TransactionFilterObserverManager from '@manager/TransactionFilterObserverManager';
 import TransactionManager from '@manager/TransactionManager';
 import TransactionPaginationManager from '@manager/TransactionPaginationManager';
 
+
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('API_KEY');
+
+    const nextStep = await checkNextStep();
+
+    switch (nextStep) {
+        case 'onboarding':
+            window.location.href = '/onboarding';
+            return;
+        case 'setting':
+            window.location.href = '/setting';
+            return;
+        case 'collect':
+        default:
+            break;
+    }
 });
 
 (async () => {

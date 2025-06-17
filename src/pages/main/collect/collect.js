@@ -3,8 +3,26 @@ import './collect.css';
 import { SERVER_URL } from '@constant/apiConstant';
 import RequestSender from '@library/RequestSender';
 import ProfileManager from '@manager/ProfileManager';
+import { checkNextStep } from '@library/ServiceCommonLib'; // 추가
 
-document.addEventListener('DOMContentLoaded', collectHistory);
+document.addEventListener('DOMContentLoaded', async () => {
+    const nextStep = await checkNextStep();
+
+    switch (nextStep) {
+        case 'onboarding':
+            window.location.href = '/onboarding';
+            return;
+        case 'setting':
+            window.location.href = '/setting';
+            return;
+        case 'collect':
+            collectHistory(); 
+            return;
+        default:
+            alert('잘못된 접근입니다.');
+            window.location.href = '/';
+    }
+});
 
 async function collectHistory() {
     try {
@@ -14,11 +32,9 @@ async function collectHistory() {
             .send();
 
         const timeout = new Promise((resolve) => setTimeout(resolve, 3000));
-
         const [response] = await Promise.all([request, timeout]);
 
         const profileData = response.profile;
-
         const profileManager = new ProfileManager();
         profileManager.saveData(profileData);
 
@@ -28,7 +44,6 @@ async function collectHistory() {
             collectionFail();
         }
     } catch (error) {
-        console.error('Error:', error.message);
         collectionFail();
     }
 }
@@ -45,17 +60,14 @@ async function collectionFail() {
     if ($statusImage) {
         $statusImage.innerHTML = `<img src="/assets/images/notice_icon.png" alt="Warning Icon">`;
     }
-
     if ($statusText) {
         $statusText.innerHTML = `데이터 수집 불가`;
         $statusText.classList.add('fail');
     }
-
     if ($noticeText) {
         $noticeText.innerHTML = `바이낸스 계정 연동 상태를 확인해주세요!`;
     }
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
-
     window.location.href = '/setting';
 }
