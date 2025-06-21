@@ -53,10 +53,6 @@ class RequestSender {
 
             const convertedResponse = ConverterLib.convertObjectToCamel(response.data);
 
-            if (convertedResponse.state !== 'success') {
-                throw new Error(convertedResponse.message);
-            }
-
             return convertedResponse;
         } catch (error) {
             throw new Error(error.response?.data?.message || error.message || 'Request failed');
