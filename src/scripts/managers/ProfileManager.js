@@ -44,10 +44,7 @@ class ProfileManager {
 
     async fetchApiData() {
         try {
-            const response = await new RequestSender()
-                .setUrl(`${SERVER_URL}/user/profile/`)
-                .setMethod('GET')
-                .send();
+            const response = await new RequestSender().setUrl(`${SERVER_URL}/user/profile/`).setMethod('GET').send();
 
             const profileData = response.profile;
 
@@ -62,10 +59,7 @@ class ProfileManager {
     saveData(data) {
         try {
             const convertedData = ConverterLib.convertObjectToSnake(data);
-            localStorage.setItem(
-                this._storageKey,
-                JSON.stringify(convertedData)
-            );
+            localStorage.setItem(this._storageKey, JSON.stringify(convertedData));
 
             this._username = data.username || '';
             this._isConnected = data.isConnected || false;
@@ -89,7 +83,7 @@ class ProfileManager {
     }
 
     getBinanceUid() {
-        return Number(this._binanceUid);
+        return this._binanceUid;
     }
 }
 

@@ -1,160 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitData | 설정</title>
-    <!-- favicon -->
-    <link rel="icon" href="/bitdata_icon.ico" type="image/png">
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w,d,s,l,i){
-            w[l]=w[l]||[];
-            w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-            var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-            j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-            f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5CP2FVDL');
-    </script>
-    <!-- End Google Tag Manager -->
-</head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BitData | 설정</title>
+        <!-- favicon -->
+        <link rel="icon" href="/bitdata_icon.ico" type="image/png" />
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CP2FVDL');
+        </script>
+        <!-- End Google Tag Manager -->
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display: none; visibility: hidden"></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-    <div class="layout">
-        <!-- 사이드 네비 -->
-        <aside>
-            <header>
-                <h1 class="title">BitData</h1>
-            </header>
-            <ul class="sidebar-menu">
-                <li>
-                    <a href="/dashboard">대시보드</a>
-                </li>
-                <li>
-                    <a href="/history">거래내역</a>
-                </li>
-                <li class="active">
-                    <a href="/setting">설정</a>
-                </li>
-            </ul>
-            <footer>
-                <button type="button" class="logout-btn">로그아웃</button>
-            </footer>
-        </aside>
-        <div class="content">
-            <!-- 헤더 -->
-            <header>
-                <h2 class="title">설정</h2>
-            </header>
-            <main>
-                <!-- 본문 -->
-                <div class="card-container">
-                    <div class="user-profile card">
-                        <header class="pb-20">
-                            <h2>내 프로필</h2>
-                        </header>
-                        <div class="card-box">
-                            <header>
-                                <h2 class="username"><span id="profile-username"></span> 환영합니다.</h2>
+        <div class="layout">
+            <!-- 사이드 네비 -->
+            <aside>
+                <header>
+                    <h1 class="title">BitData</h1>
+                </header>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="/dashboard">대시보드</a>
+                    </li>
+                    <li>
+                        <a href="/history">거래내역</a>
+                    </li>
+                    <li class="active">
+                        <a href="/setting">설정</a>
+                    </li>
+                </ul>
+                <footer>
+                    <button type="button" class="logout-btn">로그아웃</button>
+                </footer>
+            </aside>
+            <div class="content">
+                <!-- 헤더 -->
+                <header>
+                    <h2 class="title">설정</h2>
+                </header>
+                <main>
+                    <!-- 본문 -->
+                    <div class="card-container">
+                        <div class="user-profile card">
+                            <header class="pb-20">
+                                <h2>내 프로필</h2>
                             </header>
-                            <div class="binance-link-status">
-                                <div class="state-box">
-                                    <span id="profile-state" class="state"></span>
-                                    <button type="button" class="expose-info-btn">
-                                        ?
-                                        <div class="info-box">
-                                            <p class="api-key-info">API Key: <span id="profile-api-key"></span></p>
-                                            <p class="secret-key-info">Secret Key: ********</p>
-                                        </div>
+                            <div class="card-box">
+                                <header>
+                                    <h2 class="username"><span id="profile-username"></span> 환영합니다.</h2>
+                                </header>
+                                <div class="binance-link-status">
+                                    <div class="state-box">
+                                        <span id="profile-state" class="state"></span>
+                                        <button type="button" class="expose-info-btn">
+                                            ?
+                                            <div class="info-box">
+                                                <p class="api-key-info">API Key: <span id="profile-api-key"></span></p>
+                                                <p class="secret-key-info">Secret Key: ********</p>
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <button type="button" class="relink-btn">
+                                        <span>연동 재시도</span>
+                                        <img src="/assets/images/button/restart.png" alt="재시작 버튼" />
                                     </button>
                                 </div>
-                                <button type="button" class="relink-btn">
-                                    <span>연동 재시도</span>
-                                    <img src="/assets/images/button/restart.png" alt="재시작 버튼">
-                                </button>
+                                <div class="user-info">
+                                    <p class="binance-uid">UID : <span id="profile-binance-uid"></span></p>
+                                </div>
+                                <button type="button" class="setting-btn">설정하기</button>
                             </div>
-                            <div class="user-info">
-                                <p class="binance-uid">UID : <span id="profile-binance-uid"></span></p>
-                            </div>
-                            <button type="button" class="setting-btn">설정하기</button>
                         </div>
                     </div>
-                </div>
-                <div class="etc">
-                    <header class="p-10">
-                        <h2>기타</h2>
-                    </header>
-                    <a href="/faq" class="faq">자주 묻는 질문</a>
-                </div>
-            </main>
-        </div>
-    </div>
-    <!-- [연동 재시도] 로딩 화면 -->
-    <div class="modal loading hidden">
-        <div class="modal-background"></div>
-        <div class="box">
-            <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너">
-            <p>바이낸스 계정 및 데이터 연동 시도중...</p>
-        </div>
-    </div>
-    <!-- [연동 실패] 화면 -->
-     <div class="modal connected-fail hidden">
-        <div class="modal-background"></div>
-        <div class="box">
-            <img src="/assets/images/notice_icon.png" alt="알림 아이콘">
-            <p class="warn">데이터 수집 불가</p>
-            <p>바이낸스 계정 연동 상태를 확인해주세요!</p>
-        </div>
-     </div>
-    <!-- 바이낸스 계정 연동 모달 -->
-    <div class="modal binance-setting hidden">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <header>
-                <h2 class="title">바이낸스 계정 연동</h2>
-                <button type="button" class="close-btn">
-                    <img src="/assets/images/button/close.jpeg" alt="닫기 버튼">
-                </button>
-            </header>
-            <div class="modal-body">
-                <form action="" id="api-management-frm">
-                    <div class="input-block">
-                        <label for="api-key">API Key</label>
-                        <input 
-                            type="text" 
-                            id="api-key" 
-                            class="key-input" 
-                            placeholder="API Key를 입력해주세요">
-                        <p class="notice hidden">※ API Key 를 다시 한번 확인해주세요.</p>
+                    <div class="etc">
+                        <header class="p-10">
+                            <h2>기타</h2>
+                        </header>
+                        <a href="/faq" class="faq">자주 묻는 질문</a>
                     </div>
-                    <div class="input-block">
-                        <label for="secret-key">Secret Key</label>
-                        <div class="input-field">
-                            <input 
-                                type="password" 
-                                id="secret-key" 
-                                class="key-input" 
-                                placeholder="Secret Key를 입력해주세요">
-                            <button type="button" class="eye"></button>
-                        </div>
-                        <p class="notice hidden">※ Secret Key 를 다시 한번 확인해주세요.</p>
-                    </div>
-                    <div class="form-footer">
-                        <div>
-                            <a href="/assets/pdf/binance-api-connection-guide-setting.pdf" class="pdf-link" target="_blank" rel="noreferrer">바이낸스 계정연동 설명서 보기</a>
-                            <p class="notice">※ Key 값이 외부 유출되지 않도록 절대 유의해주세요.</p>
-                        </div>
-                        <button type="submit" class="save-btn">저장</button>
-                    </div>
-                </form>
+                </main>
             </div>
         </div>
-    </div>
+        <!-- [연동 재시도] 로딩 화면 -->
+        <div class="modal loading hidden">
+            <div class="modal-background"></div>
+            <div class="box">
+                <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너" />
+                <p>바이낸스 계정 및 데이터 연동 시도중...</p>
+            </div>
+        </div>
+        <!-- [연동 실패] 화면 -->
+        <div class="modal connected-fail hidden">
+            <div class="modal-background"></div>
+            <div class="box">
+                <img src="/assets/images/notice_icon.png" alt="알림 아이콘" />
+                <p class="warn">데이터 수집 불가</p>
+                <p>바이낸스 계정 연동 상태를 확인해주세요!</p>
+            </div>
+        </div>
+        <!-- 바이낸스 계정 연동 모달 -->
+        <div class="modal binance-setting hidden">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <header>
+                    <h2 class="title">바이낸스 계정 연동</h2>
+                    <button type="button" class="close-btn">
+                        <img src="/assets/images/button/close.jpeg" alt="닫기 버튼" />
+                    </button>
+                </header>
+                <div class="modal-body">
+                    <form action="" id="api-management-frm">
+                        <div class="input-block">
+                            <label for="api-key">API Key</label>
+                            <input type="text" id="api-key" class="key-input" placeholder="API Key를 입력해주세요" />
+                            <p class="notice hidden">※ API Key 를 다시 한번 확인해주세요.</p>
+                        </div>
+                        <div class="input-block">
+                            <label for="secret-key">Secret Key</label>
+                            <div class="input-field">
+                                <input type="password" id="secret-key" class="key-input" placeholder="Secret Key를 입력해주세요" />
+                                <button type="button" class="eye"></button>
+                            </div>
+                            <p class="notice hidden">※ Secret Key 를 다시 한번 확인해주세요.</p>
+                        </div>
+                        <div class="form-footer">
+                            <div>
+                                <a href="/assets/pdf/binance-api-connection-guide-setting.pdf" class="pdf-link" target="_blank" rel="noreferrer"
+                                    >바이낸스 계정 연동 설명서 보기</a
+                                >
+                                <p class="notice">※ Key 값이 외부 유출되지 않도록 절대 유의해주세요.</p>
+                            </div>
+                            <button type="submit" class="save-btn">저장</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <!-- js -->
-    <script type="module" src="./setting.js"></script>
-</body>
+        <!-- js -->
+        <script type="module" src="./setting.js"></script>
+    </body>
 </html>

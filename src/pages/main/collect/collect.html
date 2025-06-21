@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BitData</title>
-    <!-- favicon -->
-    <link rel="icon" href="/bitdata_icon.ico" type="image/png">
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w,d,s,l,i){
-            w[l]=w[l]||[];
-            w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-            var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-            j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-            f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-5CP2FVDL');
-    </script>
-    <!-- End Google Tag Manager -->
-</head>
-<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-     
-    <header> 
-        <p class="logo">BitData</p>
-    </header>
-    <main>
-        <header>
-            <h1 class="p-5">어서오세요 :)</h1>
-            <h1 class="p-5">BitData에 오신것을 환영해요!</h1>
-        </header>
-        <div class="status-image mb-20">
-            <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너">
-        </div>
-        <p class="status mb-20">데이터 수집 중...</p>
-        <p class="notice">잠시만 기다려주세요</p>
-    </main>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BitData</title>
+        <!-- favicon -->
+        <link rel="icon" href="/bitdata_icon.ico" type="image/png" />
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CP2FVDL');
+        </script>
+        <!-- End Google Tag Manager -->
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CP2FVDL" height="0" width="0" style="display: none; visibility: hidden"></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-    <!-- js -->
-    <script type="module" src="./collect.js"></script>
-</body>
+        <header>
+            <p class="logo">BitData</p>
+        </header>
+        <main>
+            <header>
+                <h1 class="p-5">어서오세요 :)</h1>
+                <h1 class="p-5">BitData에 오신 것을 환영해요!</h1>
+            </header>
+            <div class="status-image mb-20">
+                <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너" />
+            </div>
+            <p class="status mb-20">데이터 수집 중...</p>
+            <p class="notice">잠시만 기다려주세요</p>
+        </main>
+
+        <!-- js -->
+        <script type="module" src="./collect.js"></script>
+    </body>
 </html>
