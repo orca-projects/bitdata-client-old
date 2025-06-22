@@ -62,6 +62,11 @@ function collapseAnswer() {
 function openExitModal() {
     document.body.style.overflow = 'hidden';
     $exitModal.classList.remove('hidden');
+    
+    $exitModalExitReason.value = '';
+    $exitModalSubmitBtn.classList.remove('active');
+    byteCounter.textContent = '0 / 150 bytes';
+
 }
 
 function closeExitModal() {
@@ -70,6 +75,7 @@ function closeExitModal() {
 
     $exitModalExitReason.value = '';
     $exitModalSubmitBtn.classList.remove('active');
+    byteCounter.textContent = '0 / 150 bytes';
 }
 
 /* byte counter 추가  ORPJ-95 > ORPJ-109 */
