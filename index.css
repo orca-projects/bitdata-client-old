@@ -96,7 +96,7 @@
         margin-bottom: 20px;
         font-size: 24px;
         font-weight: 700;
-        text-decoration: underline; /* ORPJ-95 > ORPJ-107 추가 */
+        text-decoration: underline;
     }
     .section-1 .content .slogan-container {
         font-size: 24px;
@@ -184,6 +184,7 @@
         margin-bottom: 20px;
         font-size: 16px;
         font-weight: 700;
+        text-decoration: underline;
     }
     .section-1 .company-information {
         display: flex;
