@@ -1,5 +1,30 @@
-@import "/src/styles/reset.css";
-@import "/src/styles/default.css";
+@import '/src/styles/reset.css';
+@import '/src/styles/default.css';
 
 /* layout */
-@import "../styles/layout/layout.css";
+@import '../styles/layout/layout.css';
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+
+.content > main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.content_container p {
+    font-weight: 700;
+}
