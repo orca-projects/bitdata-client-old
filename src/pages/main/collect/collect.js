@@ -8,10 +8,7 @@ document.addEventListener('DOMContentLoaded', collectHistory);
 
 async function collectHistory() {
     try {
-        const request = new RequestSender()
-            .setUrl(`${SERVER_URL}/user/collect/`)
-            .setMethod('GET')
-            .send();
+        const request = new RequestSender().setUrl(`${SERVER_URL}/user/collect/`).setMethod('GET').send();
 
         const timeout = new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -38,22 +35,11 @@ function collectionSuccess() {
 }
 
 async function collectionFail() {
-    const $statusImage = document.querySelector('.status-image');
-    const $statusText = document.querySelector('.status');
-    const $noticeText = document.querySelector('.notice');
+    const collectLoading = document.querySelector('.collect.loading');
+    const collectFail = document.querySelector('.collect.fail');
 
-    if ($statusImage) {
-        $statusImage.innerHTML = `<img src="/assets/images/notice_icon.png" alt="Warning Icon">`;
-    }
-
-    if ($statusText) {
-        $statusText.innerHTML = `데이터 수집 불가`;
-        $statusText.classList.add('fail');
-    }
-
-    if ($noticeText) {
-        $noticeText.innerHTML = `바이낸스 계정 연동 상태를 확인해주세요!`;
-    }
+    collectLoading.classList.add('hidden');
+    collectFail.classList.remove('hidden');
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
 

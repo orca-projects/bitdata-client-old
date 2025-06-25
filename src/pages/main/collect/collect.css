@@ -1,12 +1,12 @@
-@import "/src/styles/reset.css";
-@import "/src/styles/default.css";
+@import '/src/styles/reset.css';
+@import '/src/styles/default.css';
 
 header p {
     margin-bottom: 160px;
 }
 
 /* 메인 */
-main {
+main .collect {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,13 +16,15 @@ main header {
     text-align: center;
 }
 main .status-image img {
-    width: 100px; height: 100px;
+    width: 100px;
+    height: 100px;
     padding: 20px;
 }
-main .status.fail {
+.fail .status {
     color: #f00;
 }
 /* 안내 텍스트 */
 main .notice {
-    color: #7B7B7B;
+    color: #7b7b7b;
+    margin-bottom: 10px;
 }

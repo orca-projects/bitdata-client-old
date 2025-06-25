@@ -32,15 +32,29 @@
             <p class="logo">BitData</p>
         </header>
         <main>
-            <header>
-                <h1 class="p-5">어서오세요 :)</h1>
-                <h1 class="p-5">BitData에 오신 것을 환영해요!</h1>
-            </header>
-            <div class="status-image mb-20">
-                <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너" />
+            <div class="collect loading">
+                <header>
+                    <h1 class="p-5">어서오세요 :)</h1>
+                    <h1 class="p-5">BitData에 오신 것을 환영해요!</h1>
+                </header>
+                <div class="status-image mb-20">
+                    <img src="/assets/gif/loading-spinner.gif" alt="로딩 스피너" />
+                </div>
+                <p class="status mb-20">데이터 수집 중...</p>
+                <p class="notice">잠시만 기다려주세요</p>
             </div>
-            <p class="status mb-20">데이터 수집 중...</p>
-            <p class="notice">잠시만 기다려주세요</p>
+            <div class="collect fail hidden">
+                <header>
+                    <h1 class="p-5">어서오세요 :)</h1>
+                    <h1 class="p-5">BitData에 오신 것을 환영해요!</h1>
+                </header>
+                <div class="status-image mb-20">
+                    <img src="/assets/images/notice_icon.png" alt="Warning Icon" />
+                </div>
+                <p class="status mb-20">데이터 수집 불가</p>
+                <p class="notice">3초 뒤 설정 페이지로 자동으로 이동됩니다.</p>
+                <p class="notice">설정 페이지에서 바이낸스 계정 연동 상태를 확인해주세요!</p>
+            </div>
         </main>
 
         <!-- js -->
