@@ -23,20 +23,46 @@ const initializeProfile = async () => {
     const $state = document.getElementById('profile-state');
     const $binanceApiKey = document.getElementById('profile-api-key');
     const $binanceUid = document.getElementById('profile-binance-uid');
+    const $tooltipDefault = document.querySelector('.tooltipDefault');
+    const $tooltipApiKey = document.querySelector('.api-key-info');
+    const $tooltipSecretKey = document.querySelector('.secret-key-info');
 
     $username.innerHTML = profileManager.getUsername();
 
     if (profileManager.isConnected()) {
+
         $state.classList.add('success');
         $state.classList.remove('fail');
         $state.innerHTML = '바이낸스 계정 정상 연동';
-    } else {
+        $binanceApiKey.innerHTML = profileManager.getApiKey();
+        $binanceUid.innerHTML = profileManager.getBinanceUid();
+        $tooltipDefault.classList.add('hidden');
+        $tooltipApiKey.classList.remove('hidden');
+        $tooltipSecretKey.classList.remove('hidden');
+    }
+    else if (!profileManager.getApiKey() && !profileManager.getBinanceUid()) {
+
         $state.classList.add('fail');
         $state.classList.remove('success');
         $state.innerHTML = '바이낸스 계정 연동 상태 확인 필요';
+
+        $binanceApiKey.innerHTML = '';  
+        $binanceUid.innerHTML = '';
+
+        $tooltipDefault.classList.remove('hidden');
+        $tooltipApiKey.classList.add('hidden');      
+        $tooltipSecretKey.classList.add('hidden'); 
     }
-    $binanceApiKey.innerHTML = profileManager.getApiKey();
-    $binanceUid.innerHTML = profileManager.getBinanceUid();
+    else {
+        $state.classList.add('fail');
+        $state.classList.remove('success');
+        $state.innerHTML = '바이낸스 계정 연동 상태 확인 필요';
+        $binanceApiKey.innerHTML = profileManager.getApiKey();
+        $binanceUid.innerHTML = profileManager.getBinanceUid();
+        $tooltipDefault.classList.add('hidden');
+        $tooltipApiKey.classList.remove('hidden');
+        $tooltipSecretKey.classList.remove('hidden');
+    }
 };
 
 // 실행

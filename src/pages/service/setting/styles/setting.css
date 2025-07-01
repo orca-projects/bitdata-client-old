@@ -58,7 +58,7 @@ main .card.user-profile .card-box .binance-link-status .expose-info-btn .info-bo
     position: absolute;
     top: 0; left: 30px;
 
-    padding: 10px;
+    padding: 10px 16px;
     border-radius: 10px;
 
     background-color: #44556B;
@@ -68,9 +68,16 @@ main .card.user-profile .card-box .binance-link-status .expose-info-btn .info-bo
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
+    text-align: left;
+    width: 360px;
+    min-width: unset;
+
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 main .card.user-profile .card-box .binance-link-status .expose-info-btn .info-box p {
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.6;
 }
 main .card.user-profile .card-box .binance-link-status .expose-info-btn:hover .info-box {
     visibility: visible;
