@@ -149,7 +149,7 @@ textarea {
 
 /* class */
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 /* 헤더 로고 */
