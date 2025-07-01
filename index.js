@@ -60,3 +60,35 @@ for (let index = 0; index < $paginationBtn.length; index++) {
         clickPaginationBtn(index);
     });
 }
+
+import { SERVER_URL } from '@constant/apiConstant';
+import RequestSender from '@library/RequestSender';
+
+const loginBtns = document.querySelectorAll('.login-join button');
+
+for (const loginBtn of loginBtns) {
+    loginBtn.addEventListener('click', async () => {
+        const response = await fetchIsLogin();
+        const isLogin = response.isLogin;
+        const isConnected = response.isConnected;
+
+        if (isLogin) {
+            if (isConnected) {
+                window.location.href = '/history';
+            } else {
+                window.location.href = '/setting';
+            }
+        } else {
+            window.location.href = '/login';
+        }
+    });
+}
+
+const fetchIsLogin = async () => {
+    try {
+        const response = await new RequestSender().setUrl(`${SERVER_URL}/authn/login/state/`).setMethod('get').send();
+        return response;
+    } catch (error) {
+        return {state: 'success', isLogin: false, isConnected: false};
+    }
+};

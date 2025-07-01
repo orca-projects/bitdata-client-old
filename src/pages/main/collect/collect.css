@@ -23,6 +23,10 @@ main .status-image img {
 .fail .status {
     color: #f00;
 }
+
+main .collect.hidden {
+    display: none;
+}
 /* 안내 텍스트 */
 main .notice {
     color: #7b7b7b;

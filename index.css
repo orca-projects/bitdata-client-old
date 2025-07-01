@@ -71,7 +71,7 @@
         font-size: 32px;
         font-weight: 700;
     }
-    .section-0 header .login-join a {
+    .section-0 header .login-join button {
         font-weight: 700;
         font-size: 16px;
     }
@@ -147,7 +147,7 @@
         font-weight: 700;
         color: #555;
     }
-    .section-0 footer .login-join {
+    .section-0 footer .login-join button {
         box-sizing: border-box;
         width: 180px;
         height: 60px;
