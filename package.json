@@ -4,9 +4,11 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "pm2 start ecosystem.config.cjs --env development",
         "build:development": "vite build --mode development",
+        "build:qa": "vite build --mode qa",
         "build:production": "vite build --mode production",
+        "dev": "pm2 start ecosystem.config.cjs --env development",
+        "qa": "pm2 start ecosystem.config.cjs --env qa",
         "start": "pm2 start ecosystem.config.cjs --env production",
         "stop": "pm2 stop ecosystem.config.cjs",
         "restart": "pm2 restart ecosystem.config.cjs"
