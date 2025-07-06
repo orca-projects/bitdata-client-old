@@ -6,7 +6,8 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build:production
+RUN npm run build:qa
+# RUN npm run build:production
 
 
 FROM node:22-alpine
@@ -22,4 +23,5 @@ COPY --from=builder /app/package*.json ./
 
 RUN npm ci --only=production
 
-CMD ["pm2-runtime", "start", "ecosystem.config.cjs", "--env", "production"]
+CMD ["pm2-runtime", "start", "ecosystem.config.cjs", "--env", "qa"]
+# CMD ["pm2-runtime", "start", "ecosystem.config.cjs", "--env", "production"]
