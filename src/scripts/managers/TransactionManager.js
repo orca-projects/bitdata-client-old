@@ -78,11 +78,6 @@ class TransactionBase {
             <td>${this._finalRoi}%</td>
             <td>${this._avgBuy}</td>
             <td>${this._avgSell}</td>
-            <td>
-                <button type="button" class="image-memo-btn">
-                    <img src="/assets/images/button/memo.png" alt="메모 버튼">
-                </button>
-            </td>
         `;
         return row;
     }
