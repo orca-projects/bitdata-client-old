@@ -12,7 +12,7 @@
 /* 본문 */
 .content main {
     box-sizing: border-box;
-    width: 1450px; height: 100%;
+    width: 1450px;
     padding: 0 30px;
 }
 .content > header {
@@ -128,7 +128,7 @@
 .content-table {
     position: relative;
     min-height: 550px;
-    margin-top: 20px;
+    margin: 20px 0 30px 0;
     border-collapse: collapse;
 }
 .content-table table {
@@ -141,7 +141,7 @@
 }
 .content-table th, 
 .content-table td {
-    padding: 12px 12px;
+    padding: 8px 12px;
     text-align: center;
     vertical-align: middle;
     border: none;
@@ -275,7 +275,7 @@ th .tooltip-btn:hover + .tooltip-content {
 
 /* 콘텐츠 푸터 영역 */
 main > .content-footer {
-    margin-bottom: 70px;
+    margin-bottom: 40px;
 }
 /* 페이지 네이션 */
 .pagination-number {
