@@ -81,8 +81,8 @@ window.addEventListener('pageshow', async () => {
     document.querySelector('.search-btn').addEventListener('click', async () => {
         const [start, end] = $filterDate.value.split(' ~ ');
         const filterData = {
-            startDate: new Date(start).getTime(),
-            endDate: new Date(end).getTime(),
+            startMs: new Date(start).getTime(),
+            endMs: new Date(end).getTime() + 1000 * 60 * 60 * 24 - 1,
         };
 
         const response = await fetchTransaction(filterData);
