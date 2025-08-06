@@ -11,7 +11,7 @@ import RequestSender from '@library/RequestSender';
 import ProfileManager from '@manager/ProfileManager';
 
 window.addEventListener('pageshow', async () => {
-    await checkAuthorization('API_KEY');
+    await checkAuthorization('LOGIN');
 });
 
 const profileManager = new ProfileManager();
@@ -30,7 +30,6 @@ const initializeProfile = async () => {
     $username.innerHTML = profileManager.getUsername();
 
     if (profileManager.isConnected()) {
-
         $state.classList.add('success');
         $state.classList.remove('fail');
         $state.innerHTML = '바이낸스 계정 정상 연동';
@@ -39,21 +38,18 @@ const initializeProfile = async () => {
         $tooltipDefault.classList.add('hidden');
         $tooltipApiKey.classList.remove('hidden');
         $tooltipSecretKey.classList.remove('hidden');
-    }
-    else if (!profileManager.getApiKey() && !profileManager.getBinanceUid()) {
-
+    } else if (!profileManager.getApiKey() && !profileManager.getBinanceUid()) {
         $state.classList.add('fail');
         $state.classList.remove('success');
         $state.innerHTML = '바이낸스 계정 연동 상태 확인 필요';
 
-        $binanceApiKey.innerHTML = '';  
+        $binanceApiKey.innerHTML = '';
         $binanceUid.innerHTML = '';
 
         $tooltipDefault.classList.remove('hidden');
-        $tooltipApiKey.classList.add('hidden');      
-        $tooltipSecretKey.classList.add('hidden'); 
-    }
-    else {
+        $tooltipApiKey.classList.add('hidden');
+        $tooltipSecretKey.classList.add('hidden');
+    } else {
         $state.classList.add('fail');
         $state.classList.remove('success');
         $state.innerHTML = '바이낸스 계정 연동 상태 확인 필요';
