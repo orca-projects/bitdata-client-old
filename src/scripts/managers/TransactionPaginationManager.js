@@ -33,10 +33,8 @@ class TransactionPaginationManager {
         this.assignPages();
 
         if (this._transactions.length === 0) {
-            this._transactionTable.style.display = 'none';
             this._emptyResult.style.display = 'flex';
         } else {
-            this._transactionTable.style.display = '';
             this._emptyResult.style.display = 'none';
         }
 
