@@ -3,7 +3,7 @@ import { checkAuthorization } from '@library/CommonLib.js';
 import { logout } from '@library/ServiceCommonLib.js';
 
 window.addEventListener('pageshow', async () => {
-    await checkAuthorization('API_KEY');
+    await checkAuthorization('LOGIN');
 });
 
 const logoutBtn = document.querySelector('.logout-btn');

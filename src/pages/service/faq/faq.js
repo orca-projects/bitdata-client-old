@@ -7,7 +7,7 @@ import { checkAuthorization } from '@library/CommonLib.js';
 import { logout } from '@library/ServiceCommonLib.js';
 
 window.addEventListener('pageshow', async () => {
-    await checkAuthorization('API_KEY');
+    await checkAuthorization('LOGIN');
 });
 
 const $faqs = document.querySelectorAll('.faq');
@@ -62,11 +62,10 @@ function collapseAnswer() {
 function openExitModal() {
     document.body.style.overflow = 'hidden';
     $exitModal.classList.remove('hidden');
-    
+
     $exitModalExitReason.value = '';
     $exitModalSubmitBtn.classList.remove('active');
     byteCounter.textContent = '0 / 150 bytes';
-
 }
 
 function closeExitModal() {
@@ -88,7 +87,7 @@ function getByteLength(str) {
 function inputExitReason() {
     const inputVal = $exitModalExitReason.value;
     const byteLength = getByteLength(inputVal);
-    
+
     byteCounter.textContent = `${byteLength} / 150 bytes`;
 
     if (inputVal === '' || byteLength > 150) {
@@ -145,5 +144,3 @@ logoutBtn.addEventListener('click', async function () {
         alert('로그아웃에 실패 했습니다.');
     }
 });
-
-

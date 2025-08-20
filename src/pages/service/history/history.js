@@ -10,7 +10,7 @@ import TransactionManager from '@manager/TransactionManager';
 import TransactionPaginationManager from '@manager/TransactionPaginationManager';
 
 window.addEventListener('pageshow', async () => {
-    await checkAuthorization('API_KEY');
+    await checkAuthorization('LOGIN');
 });
 
 (async () => {
