@@ -1,7 +1,5 @@
-import './login.css';
-
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
 
 const login = async () => {
     try {

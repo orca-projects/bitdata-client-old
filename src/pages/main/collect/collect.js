@@ -1,8 +1,6 @@
-import './collect.css';
-
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
-import ProfileManager from '@manager/ProfileManager';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
+import ProfileManager from '/src/scripts/managers/ProfileManager.js';
 
 document.addEventListener('DOMContentLoaded', collectHistory);
 

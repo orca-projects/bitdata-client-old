@@ -1,5 +1,5 @@
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
 
 const logout = async function () {
     const result = await fetchLogout();

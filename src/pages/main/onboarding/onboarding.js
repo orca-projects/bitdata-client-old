@@ -1,12 +1,10 @@
-import './onboarding.css';
-
 import { checkInputValue, noticeInputField, checkActive } from '/src/components/key-input-field.js';
 import { maskingShowBtn } from '/src/components/eye-button.js';
 
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
 
-import { checkAuthorization } from '@library/CommonLib.js';
+import { checkAuthorization } from '/src/scripts/libraries/CommonLib.js';
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('LOGIN');

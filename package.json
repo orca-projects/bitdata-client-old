@@ -2,24 +2,5 @@
     "name": "bitdata",
     "private": true,
     "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-        "build:development": "vite build --mode development",
-        "build:qa": "vite build --mode qa",
-        "build:production": "vite build --mode production",
-        "dev": "pm2 start ecosystem.config.cjs --env development",
-        "qa": "pm2 start ecosystem.config.cjs --env qa",
-        "start": "pm2 start ecosystem.config.cjs --env production",
-        "stop": "pm2 stop ecosystem.config.cjs",
-        "restart": "pm2 restart ecosystem.config.cjs"
-    },
-    "devDependencies": {
-        "vite": "^5.4.11"
-    },
-    "dependencies": {
-        "axios": "^1.7.8",
-        "express": "^4.21.1",
-        "express-session": "^1.18.1",
-        "pm2": "^5.4.3"
-    }
+    "type": "module"
 }

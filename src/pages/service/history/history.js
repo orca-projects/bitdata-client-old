@@ -1,13 +1,11 @@
-import './styles/history.css';
-
-import { checkAuthorization } from '@library/CommonLib.js';
-import { logout } from '@library/ServiceCommonLib.js';
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
-import ProfileManager from '@manager/ProfileManager';
-import TransactionFilterObserverManager from '@manager/TransactionFilterObserverManager';
-import TransactionManager from '@manager/TransactionManager';
-import TransactionPaginationManager from '@manager/TransactionPaginationManager';
+import { checkAuthorization } from '/src/scripts/libraries/CommonLib.js';
+import { logout } from '/src/scripts/libraries/ServiceCommonLib.js';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
+import ProfileManager from '/src/scripts/managers/ProfileManager.js';
+import TransactionFilterObserverManager from '/src/scripts/managers/TransactionFilterObserverManager.js';
+import TransactionManager from '/src/scripts/managers/TransactionManager.js';
+import TransactionPaginationManager from '/src/scripts/managers/TransactionPaginationManager.js';
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('LOGIN');

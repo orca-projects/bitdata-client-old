@@ -1,10 +1,8 @@
-import './styles/faq.css';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
 
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
-
-import { checkAuthorization } from '@library/CommonLib.js';
-import { logout } from '@library/ServiceCommonLib.js';
+import { checkAuthorization } from '/src/scripts/libraries/CommonLib.js';
+import { logout } from '/src/scripts/libraries/ServiceCommonLib.js';
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('LOGIN');

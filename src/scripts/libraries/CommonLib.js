@@ -1,4 +1,4 @@
-import { SERVER_URL } from '@constant/apiConstant';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
 
 const checkAuthorization = async (type) => {
     try {

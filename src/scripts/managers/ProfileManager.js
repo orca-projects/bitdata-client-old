@@ -1,7 +1,6 @@
-import { SERVER_URL } from '@constant/apiConstant';
-
-import { ConverterLib } from '@library/ConverterLib';
-import RequestSender from '@library/RequestSender';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import { ConverterLib } from '/src/scripts/libraries/ConverterLib.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
 
 class ProfileManager {
     constructor() {

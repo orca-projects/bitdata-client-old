@@ -1,14 +1,13 @@
-import './styles/setting.css';
-import { checkAuthorization } from '@library/CommonLib.js';
-import { logout } from '@library/ServiceCommonLib.js';
+import { checkAuthorization } from '/src/scripts/libraries/CommonLib.js';
+import { logout } from '/src/scripts/libraries/ServiceCommonLib.js';
 
 import { checkInputValue, noticeInputField, checkActive, clearInputField } from '/src/components/key-input-field.js';
 
 import { maskingShowBtn } from '/src/components/eye-button.js';
 
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
-import ProfileManager from '@manager/ProfileManager';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
+import ProfileManager from '/src/scripts/managers/ProfileManager.js';
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('LOGIN');

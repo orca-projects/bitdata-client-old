@@ -1,4 +1,5 @@
-import './index.css';
+import { SERVER_URL } from '/src/scripts/constants/apiConstant.js';
+import RequestSender from '/src/scripts/libraries/RequestSender.js';
 
 const $scrollSection = document.querySelector('.scroll-section');
 const $scrollSectionItems = document.querySelectorAll('.scroll-section .section-item');
@@ -60,9 +61,6 @@ for (let index = 0; index < $paginationBtn.length; index++) {
         clickPaginationBtn(index);
     });
 }
-
-import { SERVER_URL } from '@constant/apiConstant';
-import RequestSender from '@library/RequestSender';
 
 const loginBtns = document.querySelectorAll('.login-join button');
 

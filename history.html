@@ -6,8 +6,10 @@
         <title>거래내역</title>
         <!-- favicon -->
         <link rel="icon" href="/bitdata_icon.ico" type="image/png" />
-
+        <!-- env -->
+        <script src="/config.js"></script>
         <!-- css -->
+        <link rel="stylesheet" href="/src/pages/service/history/styles/history.css" />
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <!-- Google Tag Manager -->
         <script>
@@ -40,7 +42,7 @@
                 </header>
                 <ul class="sidebar-menu">
                     <li>
-                        <a href="dashboard">대시보드</a>
+                        <a href="/dashboard">대시보드</a>
                     </li>
                     <li class="active">
                         <a href="/history">거래내역</a>
@@ -345,6 +347,6 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <script type="module" src="./history.js"></script>
+        <script type="module" src="/src/pages/service/history/history.js"></script>
     </body>
 </html>

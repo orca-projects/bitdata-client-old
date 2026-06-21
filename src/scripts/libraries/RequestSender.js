@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { ConverterLib } from '@library/ConverterLib';
-import { CookieLib } from '@library/CookieLib';
+import { ConverterLib } from '/src/scripts/libraries/ConverterLib.js';
+import { CookieLib } from '/src/scripts/libraries/CookieLib.js';
 
 class RequestSender {
     constructor() {
@@ -42,27 +41,32 @@ class RequestSender {
         try {
             await this.requestSetup();
 
-            const response = await axios({
-                url: this.url,
+            const url = this.params
+                ? `${this.url}?${new URLSearchParams(this.params)}`
+                : this.url;
+
+            const response = await fetch(url, {
                 method: this.method,
                 headers: this.headers,
-                params: this.params,
-                data: this.data,
-                withCredentials: true,
+                body: this.data ? JSON.stringify(this.data) : undefined,
+                credentials: 'include',
             });
 
-            const convertedResponse = ConverterLib.convertObjectToCamel(response.data);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `HTTP ${response.status}`);
+            }
 
-            return convertedResponse;
+            const responseData = await response.json();
+            return ConverterLib.convertObjectToCamel(responseData);
         } catch (error) {
-            throw new Error(error.response?.data?.message || error.message || 'Request failed');
+            throw new Error(error.message || 'Request failed');
         }
     }
 
     async requestSetup() {
         if (this.isPost()) {
             await this.setHeadersCsrfToken();
-
             this.data = this.data ? ConverterLib.convertObjectToSnake(this.data) : undefined;
         } else {
             this.params = this.params ? ConverterLib.convertObjectToSnake(this.params) : undefined;

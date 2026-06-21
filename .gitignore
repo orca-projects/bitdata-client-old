@@ -1,3 +1,6 @@
+# env config (배포 환경별 별도 배치)
+config.js
+
 # Logs
 logs
 *.log
@@ -24,4 +27,4 @@ dist-ssr
 *.sw?
 
 .env
-.env.*
+.env.local

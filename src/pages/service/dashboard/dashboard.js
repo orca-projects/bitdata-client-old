@@ -1,6 +1,5 @@
-import './dashboard.css';
-import { checkAuthorization } from '@library/CommonLib.js';
-import { logout } from '@library/ServiceCommonLib.js';
+import { checkAuthorization } from '/src/scripts/libraries/CommonLib.js';
+import { logout } from '/src/scripts/libraries/ServiceCommonLib.js';
 
 window.addEventListener('pageshow', async () => {
     await checkAuthorization('LOGIN');
